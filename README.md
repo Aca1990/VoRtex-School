@@ -56,3 +56,5 @@ Figure 5. VoRtex virtual environment (Windows desktop, third-person perspective)
 ![alt text](https://github.com/Aca1990/VoRtex-School/blob/master/Pictures/VoRtex%20virtual%20environment%20(Windows%20desktop%2C%20first-person%20perspective).png?raw=true)
 
 Figure 6. VoRtex virtual environment (Windows desktop, first-person perspective).
+
+[VoRtex prototype video](https://www.youtube.com/watch?v=xmUY6tadgkA&ab_channel=VoRtexteam "VoRtex prototype video")
