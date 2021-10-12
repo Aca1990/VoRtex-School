@@ -2,11 +2,17 @@
 VoRtex School is a virtual worlds platform for education. Developed in Unity game engine using UNet networking, IBM Watson, Forge Networking, OpenCV, MySQL and Ethereum.
 
 Educator needs are represented through the following system requirements:
-•	Implement an access system for user authorization and authentication (se-curity)
+
+•	Implement an access system for user authorization and authentication (security)
+
 •	Enable tools for creating a virtual classroom without additional program-ming skills (VW design)
+
 •	Enable the deployment of the virtual classroom to end-users on cloud serv-ers or local (institutions) machines (scalability)
+
 •	Enable virtual assists during the session that support teachers for prede-fined courses (content generation)
+
 •	Design immersive environment that can be used via different user interfac-es (Communication using PC desktop or VR devices)
+
 
 The VoRtex prototype adapts the MicroLessons concept. MicroLessons are ses-sions prepared and created by the teacher using a web platform or the client applica-tion on a desktop PC. Also, the MicroLessons structure includes challenges like prob-lem-solving puzzles for different use cases like learning a new programming algorithm or exploring space to find required objects. MicroLesson practical examples are:
 •	Build 3D interactive simulation (introduction to game development)
