@@ -5,17 +5,17 @@ Educator needs are represented through the following system requirements:
 
 •	Implement an access system for user authorization and authentication (security)
 
-•	Enable tools for creating a virtual classroom without additional program-ming skills (VW design)
+•	Enable tools for creating a virtual classroom without additional programming skills (VW design)
 
-•	Enable the deployment of the virtual classroom to end-users on cloud serv-ers or local (institutions) machines (scalability)
+•	Enable the deployment of the virtual classroom to end-users on cloud servers or local (institutions) machines (scalability)
 
-•	Enable virtual assists during the session that support teachers for prede-fined courses (content generation)
+•	Enable virtual assists during the session that support teachers for predeined courses (content generation)
 
-•	Design immersive environment that can be used via different user interfac-es (Communication using PC desktop or VR devices)
+•	Design immersive environment that can be used via different user interfaces (Communication using PC desktop or VR devices)
 
 
 
-The VoRtex prototype adapts the MicroLessons concept. MicroLessons are ses-sions prepared and created by the teacher using a web platform or the client applica-tion on a desktop PC. Also, the MicroLessons structure includes challenges like prob-lem-solving puzzles for different use cases like learning a new programming algorithm or exploring space to find required objects. MicroLesson practical examples are:
+The VoRtex prototype adapts the MicroLessons concept. MicroLessons are sessions prepared and created by the teacher using a web platform or the client application on a desktop PC. Also, the MicroLessons structure includes challenges like problem solving puzzles for different use cases like learning a new programming algorithm or exploring space to find required objects. MicroLesson practical examples are:
 
 •	Build 3D interactive simulation (introduction to game development)
 
