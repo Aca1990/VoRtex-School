@@ -14,12 +14,19 @@ Educator needs are represented through the following system requirements:
 •	Design immersive environment that can be used via different user interfac-es (Communication using PC desktop or VR devices)
 
 
+
 The VoRtex prototype adapts the MicroLessons concept. MicroLessons are ses-sions prepared and created by the teacher using a web platform or the client applica-tion on a desktop PC. Also, the MicroLessons structure includes challenges like prob-lem-solving puzzles for different use cases like learning a new programming algorithm or exploring space to find required objects. MicroLesson practical examples are:
+
 •	Build 3D interactive simulation (introduction to game development)
+
 •	Bank resource management and critical thinking (introduction to finance and decision making)
+
 •	Real-world physics (a lesson about laws of physics)
+
 •	Scientific method (chemistry and biology)
+
 •	Flora and Fauna exploration (vegetation and animal)
+
 •	Earth exploration and time travel (geography and history)
 
 
