@@ -5,9 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Linq;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
-using System;
 
 public class Login : MonoBehaviour
 {
@@ -31,9 +28,8 @@ public class Login : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("name", nameField.text);
         form.AddField("password", passwordField.text);
-        // NetworkConstants.IpAddress
-        string address= GetLocalIPAddress();
-        UnityWebRequest www = UnityWebRequest.Post($"http://{address}/sqlconnect/login.php", form);
+
+        UnityWebRequest www = UnityWebRequest.Post($"http://{NetworkConstants.IpAddress}/sqlconnect/login.php", form);
         yield return www.SendWebRequest();
 
         if (www.isNetworkError || www.isHttpError)
@@ -52,12 +48,12 @@ public class Login : MonoBehaviour
                 DBManager.achievements = new HashSet<string>(serverData[1].Split(',').ToList());
                 DBManager.face_recognition_image_location = serverData[2];
                 Debug.Log(serverData[3]);
-                DBManager.role_id = Convert.ToInt32(serverData[3]);
-                DBManager.id = Convert.ToInt32(serverData[4]);
-                DBManager.microLesson.LessonName = serverData[5]; //"virtual_reality"
-                DBManager.microLesson.LessonEnvironment = Convert.ToInt32(serverData[6]); //"virtual_reality"
-                //TODO: add presentation_ppt_content to DB?
-                DBManager.microLesson.presentation_ppt_content = $"http://{address}/presentations/{DBManager.microLesson.LessonName}/"; // C:\MAMP\htdocs\presentations\acauser123\virtual_reality
+                DBManager.role_id = System.Convert.ToInt32(serverData[3]);
+                DBManager.id = System.Convert.ToInt32(serverData[4]);
+                // TODO: microlesson setup
+                DBManager.microLesson.LessonName = "virtual_reality";
+                //TODO: add presentation_ppt_content to DB
+                DBManager.microLesson.presentation_ppt_content = $"http://{NetworkConstants.IpAddress}/presentations/{DBManager.microLesson.LessonName}/"; // C:\MAMP\htdocs\presentations\acauser123\virtual_reality
                 Debug.Log(@"C:\MAMP\htdocs\Python\face_recognize_webcam.py" + @" ..\" + DBManager.face_recognition_image_location); 
                 Debug.Log(DBManager.microLesson.presentation_ppt_content);
                 //Without face detection -> GoToVirtualRoom();
@@ -71,12 +67,11 @@ public class Login : MonoBehaviour
                     sn.Connect();
                 }
 
+
                 // load ip adress
                 form = new WWWForm();
                 form.AddField("user_id", DBManager.id);
-                //{NetworkConstants.IpAddress}
-                string post = $"http://{address}/sqlconnect/getIpAddress.php";
-                www = UnityWebRequest.Post(post, form);
+                www = UnityWebRequest.Post($"http://{NetworkConstants.IpAddress}/sqlconnect/getIpAddress.php", form);
                 yield return www.SendWebRequest();
 
                 if (www.isNetworkError || www.isHttpError)
@@ -100,19 +95,6 @@ public class Login : MonoBehaviour
         }
     }
 
-    private static string GetLocalIPAddress()
-    {
-        var host = Dns.GetHostEntry(Dns.GetHostName());
-        foreach (var ip in host.AddressList)
-        {
-            if (ip.AddressFamily == AddressFamily.InterNetwork)
-            {
-                return ip.ToString();
-            }
-        }
-        throw new Exception("No network adapters with an IPv4 address in the system!");
-    }
-
     public void VerifyLoginInputs()
     {
         submitButton.interactable = (nameField.text.Length >= 8 && passwordField.text.Length >= 8);
@@ -121,7 +103,7 @@ public class Login : MonoBehaviour
     private void GoToVirtualRoom()
     {
         Debug.Log("User logged in after face recognition");
-        SceneManager.LoadScene(DBManager.microLesson.LessonEnvironment); // 1 classroom, 2 city, 3 park
+        SceneManager.LoadScene(1);
     }
 
     void Update()
