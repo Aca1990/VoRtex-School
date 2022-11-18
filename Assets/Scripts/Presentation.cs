@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -19,8 +22,11 @@ public class Presentation : Interactable
 
     private GameObject firstPersonPresentation;
     private GameObject firstPersonPresentationCamera;
-    public static bool PresentationCameraActive;
+    private Texture2D tex;
+    private string savePath;
+    private string saveFolder;
 
+    public static bool PresentationCameraActive;
     public NetworkIdentity userIdentityWithAuthority;
     Uri baseUri;
 
@@ -29,7 +35,6 @@ public class Presentation : Interactable
         slideNumber = 1;
         PresentationCameraActive = false;
         slideName = "slide1.png";
-        imageCount = 38;//Directory.GetFiles(DBManager.microLesson.presentation_ppt_content, "*.png").Length;
         Debug.Log("Presentation loaded");
 
         // set first person camera
@@ -40,14 +45,31 @@ public class Presentation : Interactable
         firstPersonPresentationCamera.SetActive(false);
 
         //set up initial slide
-        baseUri = new Uri(DBManager.microLesson.presentation_ppt_content);
-        Uri myUri = new Uri(baseUri, slideName);
-        path = myUri.ToString(); //Path.Combine(DBManager.microLesson.presentation_ppt_content, slideName);
-        Debug.Log("presentation path " + path);
         //path = @"C:\MAMP\htdocs\presentations\acauser123\virtual_reality\slide1.png";
-        Texture2D tex = LoadPNG(path);
-        gameObject.GetComponent<Renderer>().material.mainTexture = tex;
-        firstPersonPresentation.GetComponent<Renderer>().material.mainTexture = tex;
+        saveFolder = string.Format("{0}/{1}", Application.persistentDataPath, DBManager.microLesson.LessonName);
+        savePath = string.Format("{0}/{1}", saveFolder, slideName);
+
+        if (File.Exists(savePath))
+        {
+            SetUpImage();
+        }
+        else
+        {
+            try
+            {
+                if (!Directory.Exists(saveFolder))
+                {
+                    Directory.CreateDirectory(saveFolder);
+                }
+
+            }
+            catch (IOException ex)
+            {
+                Debug.Log(ex.Message);
+            }
+
+            StartCoroutine(UploadSlides());
+        }
     }
 
     private void SetSlideName()
@@ -201,12 +223,17 @@ public class Presentation : Interactable
             slideNumber--;
         }
         SetSlideName();
-        //path = Path.Combine(DBManager.microLesson.presentation_ppt_content, slideName);
-        Uri myUri = new Uri(baseUri, slideName);
-        path = myUri.ToString();
-        Debug.Log("presentation path " + path);
-        //path = @"C:\MAMP\htdocs\presentations\acauser123\virtual_reality\slide1.png";
-        Texture2D tex = LoadPNG(path);
+        saveFolder = string.Format("{0}/{1}", Application.persistentDataPath, DBManager.microLesson.LessonName);
+        savePath = string.Format("{0}/{1}", saveFolder, slideName);
+
+        if (File.Exists(savePath))
+        {
+            tex = LoadPNG(savePath);
+        }
+        else
+        {
+            tex = LoadPNG(path);
+        }
         gameObject.GetComponent<Renderer>().material.mainTexture = tex;
         firstPersonPresentation.GetComponent<Renderer>().material.mainTexture = tex;
     }
@@ -217,53 +244,183 @@ public class Presentation : Interactable
         Texture2D tex = null;
         byte[] fileData;
         Debug.Log(filePath);
-        //if (File.Exists(filePath))
-        //{
-        //    fileData = File.ReadAllBytes(filePath);
-        //    tex = new Texture2D(2, 2);
-        //    tex.LoadImage(fileData); //..this will auto-resize the texture dimensions.
-        //}
-        bool exist = false;
-        try
+        if (File.Exists(filePath))
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(filePath);
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            {
-                exist = response.StatusCode == HttpStatusCode.OK;
-            }
-        }
-        catch
-        {
-        }
-        if(exist)
-        {
-            Debug.Log("File exist");
-            fileData = GetBytesFromUrl(filePath);
+            fileData = File.ReadAllBytes(filePath);
             tex = new Texture2D(2, 2);
-            tex.LoadImage(fileData);
+            tex.LoadImage(fileData); //..this will auto-resize the texture dimensions.
         }
         else
         {
-            Debug.Log("File do not exist");
+            bool exist = false;
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(filePath);
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    exist = response.StatusCode == HttpStatusCode.OK;
+                }
+            }
+            catch
+            {
+            }
+            if(exist)
+            {
+                Debug.Log("File exist");
+                fileData = GetBytesFromUrl(filePath);
+                tex = new Texture2D(2, 2);
+                tex.LoadImage(fileData);
+            }
+            else
+            {
+                Debug.Log("File do not exist");
+            }
         }
         return tex;
     }
 
     private byte[] GetBytesFromUrl(string url)
     {
-        byte[] b;
+        byte[] b = null;
         HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(url);
-        WebResponse myResp = myReq.GetResponse();
+        myReq.Method = "GET";
+        //myReq.Headers.Add("User-Agent", "Mozilla / 5.0(Windows NT 10.0; WOW64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 55.0.2883.87 Safari / 537.36");
+        WebResponse response = myReq.GetResponse();
 
-        Stream stream = myResp.GetResponseStream();
-        //int i;
-        using (BinaryReader br = new BinaryReader(stream))
+        if (response == null)
         {
-            //i = (int)(stream.Length);
-            b = br.ReadBytes(500000);
-            br.Close();
+            Debug.Log("No image");
         }
-        myResp.Close();
+        else
+        {
+            Stream stream = response.GetResponseStream();
+            using (BinaryReader br = new BinaryReader(stream))
+            {
+                //i = (int)(stream.Length);
+                b = br.ReadBytes(500000);
+                br.Close();
+            }
+            response.Close();
+            //b = downloadFullData(myReq);
+        }
+
         return b;
+    }
+
+    byte[] downloadFullData(HttpWebRequest request)
+    {
+        using (WebResponse response = request.GetResponse())
+        {
+
+            if (response == null)
+            {
+                return null;
+            }
+
+            using (Stream input = response.GetResponseStream())
+            {
+                byte[] buffer = new byte[16 * 1024];
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    int read;
+                    while (input.CanRead && (read = input.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        ms.Write(buffer, 0, read);
+                    }
+                    return ms.ToArray();
+                }
+            }
+        }
+    }
+    IEnumerator UploadSlides()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("microlesson_id", DBManager.microLesson.MicrolessonId);
+        form.AddField("upload_images", saveFolder);
+        string post = $"http://{NetworkConstants.IpAddress}/sqlconnect/downloadPresentation.php";
+        UnityWebRequest www = UnityWebRequest.Post(post, form);
+        yield return www.SendWebRequest();
+
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            string[] serverData = www.downloadHandler.text.Split('\t');
+            if (serverData[0] == "0")
+            {
+                SetUpImage();
+            }
+        }
+
+        //using (UnityWebRequest www = UnityWebRequest.Get(url))
+        //{
+        //    www.SetRequestHeader("User-Agent", "Mozilla / 5.0(Windows NT 10.0; WOW64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 55.0.2883.87 Safari / 537.36");
+
+        //    yield return www.SendWebRequest();
+        //    if (www.isNetworkError || www.isHttpError)
+        //    {
+        //        Debug.Log(www.error);
+        //    }
+        //    else
+        //    {
+        //        File.WriteAllBytes(savePath, www.downloadHandler.data);
+        //        tex = LoadPNG(savePath);
+        //        gameObject.GetComponent<Renderer>().material.mainTexture = tex;
+        //        firstPersonPresentation.GetComponent<Renderer>().material.mainTexture = tex;
+        //    }
+        //}
+    }
+
+    private void Ftp(string path)
+    {
+        try
+        {
+            // ftp://epiz_33020157@ftpupload.net/htdocs/presentations
+            Uri serverUri = new Uri(path);
+            if (serverUri.Scheme != Uri.UriSchemeFtp)
+            {
+                return;
+            }
+            FtpWebRequest reqFTP;
+            reqFTP = (FtpWebRequest)WebRequest.Create(new Uri(path));
+            reqFTP.Credentials = new NetworkCredential("epiz_33020157", "UdsrAv45dd");
+            reqFTP.KeepAlive = false;
+            reqFTP.Method = WebRequestMethods.Ftp.DownloadFile;
+            reqFTP.UseBinary = true;
+            reqFTP.Proxy = null;
+            reqFTP.UsePassive = false;
+            FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
+            Stream responseStream = response.GetResponseStream();
+            FileStream writeStream = new FileStream(savePath, FileMode.Create);                
+
+            int Length = 2048;
+            Byte[] buffer = new Byte[Length];
+            int bytesRead = responseStream.Read(buffer, 0, Length);
+            while (bytesRead > 0)
+            {
+                writeStream.Write(buffer, 0, bytesRead);
+                bytesRead = responseStream.Read(buffer, 0, Length);
+            }
+            writeStream.Close();
+            response.Close();
+        }
+        catch (WebException wEx)
+        {
+            Debug.Log(wEx.Message);
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
+    }
+
+    private void SetUpImage()
+    {
+        imageCount = Directory.GetFiles(saveFolder, "*.png").Length; // 38;
+        tex = LoadPNG(savePath);
+        gameObject.GetComponent<Renderer>().material.mainTexture = tex;
+        firstPersonPresentation.GetComponent<Renderer>().material.mainTexture = tex;
     }
 }

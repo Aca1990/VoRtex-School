@@ -50,5 +50,5 @@
 	$microlessonnamecheck = mysqli_query($con, $microlessoncheckquery) or die("2: microlesson check query failed " . $username); // error code #2 - name check query failed
 	$microlessonInfo = mysqli_fetch_assoc($microlessonnamecheck);
 
-	echo "0\t" . $loginInfo["achievements"] . "\t" . $loginInfo["face_recognition_image"] . "\t" . $loginInfo["role_id"] . "\t" . $loginInfo["id"] . "\t" . $microlessonInfo["lesson_name"] . "\t" . $microlessonInfo["lesson_environment_id"];
+	echo "0\t" . $loginInfo["achievements"] . "\t" . $loginInfo["face_recognition_image"] . "\t" . $loginInfo["role_id"] . "\t" . $loginInfo["id"] . "\t" . $microlessonInfo["lesson_name"] . "\t" . $microlessonInfo["lesson_environment_id"] . "\t" . $loginInfo["microlesson_id"];
 ?>

@@ -65,13 +65,13 @@ public class NetworkManagerHUDCustom : MonoBehaviour
     void Awake()
     {
         manager = GetComponent<NetworkManager>();
-        manager.networkAddress = NetworkConstants.IpAddress;
+        manager.networkAddress = NetworkConstants.ServerIpAddress;
         //manager.isHosting = true;
     }
 
     void Start()
     {
-        //manager.networkAddress = NetworkConstants.IpAddress;
+        //manager.networkAddress = NetworkConstants.ServerIpAddress;
     }
 
     void OnGUI()
@@ -96,7 +96,7 @@ public class NetworkManagerHUDCustom : MonoBehaviour
                     {
                         if (GUI.Button(new Rect(xpos, ypos, 200, 20), "LAN Host(H)"))
                         {
-                            manager.networkAddress = NetworkConstants.IpAddress;
+                            manager.networkAddress = NetworkConstants.ServerIpAddress;
                             manager.StartHost();
                         }
 

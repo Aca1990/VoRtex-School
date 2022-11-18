@@ -42,7 +42,7 @@ public class MultiplayerMenu : MonoBehaviour
             OnApplicationQuit();
         }
 
-		ipAddress = NetworkConstants.IpAddress; //"127.0.0.1"
+		ipAddress = NetworkConstants.ServerIpAddress; //"127.0.0.1"
         portNumber = "15937";
 
         for (int i = 0; i < ToggledButtons.Length; ++i)
@@ -76,7 +76,9 @@ public class MultiplayerMenu : MonoBehaviour
 
 	public void Connect()
 	{
-		if (connectUsingMatchmaking)
+        ipAddress = NetworkConstants.ServerIpAddress;
+
+        if (connectUsingMatchmaking)
 		{
 			ConnectToMatchmaking();
             return;
@@ -141,8 +143,8 @@ public class MultiplayerMenu : MonoBehaviour
 
 	public void Host()
 	{
-
-		if (useTCP)
+        ipAddress = NetworkConstants.ServerIpAddress;
+        if (useTCP)
 		{
 			server = new TCPServer(64);
 			((TCPServer)server).Connect();

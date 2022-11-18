@@ -26,6 +26,7 @@ public class VirtualSceneManager : MonoBehaviour
         form.AddField("achievements", achievements);
 
         UnityWebRequest www = UnityWebRequest.Post($"http://{NetworkConstants.IpAddress}/sqlconnect/savedata.php", form);
+        www.SetRequestHeader("User-Agent", "Mozilla / 5.0(Windows NT 10.0; WOW64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 55.0.2883.87 Safari / 537.36");
         yield return www.SendWebRequest();
 
         if (www.isNetworkError || www.isHttpError)
