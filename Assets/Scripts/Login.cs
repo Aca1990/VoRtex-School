@@ -34,7 +34,7 @@ public class Login : MonoBehaviour
         form.AddField("password", passwordField.text);
 
         // NetworkConstants.IpAddress is db address
-        string address = GetLocalIPAddress();  //NetworkConstants.IpAddress; // "vortex-webplatform.great-site.net" or GetLocalIPAddress();
+        string address = NetworkConstants.IpAddress; // "vortex-webplatform.great-site.net" or GetLocalIPAddress();
         string fullAddress = $"http://{address}/sqlconnect/login.php";
         UnityWebRequest www = UnityWebRequest.Post(fullAddress, form); // http://vortex-webplatform.great-site.net/sqlconnect/login.php
         www.SetRequestHeader("User-Agent", "Mozilla / 5.0(Windows NT 10.0; WOW64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 55.0.2883.87 Safari / 537.36");
@@ -77,6 +77,7 @@ public class Login : MonoBehaviour
                     form.AddField("user_ip", NetworkConstants.ServerIpAddress);
                     string post = $"http://{address}/sqlconnect/getIpAddress.php";
                     www = UnityWebRequest.Post(post, form);
+                    www.SetRequestHeader("User-Agent", "Mozilla / 5.0(Windows NT 10.0; WOW64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 55.0.2883.87 Safari / 537.36");
                     yield return www.SendWebRequest();
 
                     if (www.isNetworkError || www.isHttpError)
@@ -103,6 +104,7 @@ public class Login : MonoBehaviour
                     form.AddField("microlesson_id", DBManager.microLesson.MicrolessonId);
                     string post = $"http://{address}/sqlconnect/getClassroomIp.php";
                     www = UnityWebRequest.Post(post, form);
+                    www.SetRequestHeader("User-Agent", "Mozilla / 5.0(Windows NT 10.0; WOW64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 55.0.2883.87 Safari / 537.36");
                     yield return www.SendWebRequest();
 
                     if (www.isNetworkError || www.isHttpError)

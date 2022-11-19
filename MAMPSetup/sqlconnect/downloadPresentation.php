@@ -25,15 +25,17 @@
 
 	$namecheck = mysqli_query($con, $namecheckquery) or die("2: name check query failed " . $microlesson_id); // error code #2 - name check query failed
 
+	$images = "0\n";
 	while ($row = mysqli_fetch_array($namecheck)) {
 		$imgtitle = $row["imgTitle"];	
 		$imgtype = $row["imgType"];
-		$imgfile = $imglocation . "\\" . $imgtitle;
+		//$imgfile = join(DIRECTORY_SEPARATOR, array($imglocation, $imgtitle));
 	    $blob = $row["imgData"];
-		$data = base64_decode($blob);
+		//$data = base64_decode($blob);
 		#echo $data;
-		file_put_contents($imgfile, $data);
+		#file_put_contents($imgfile, $data);
+		$images = $images . "$imgtitle\t$blob" . "\n";
 	}
 	
-	echo "0\t";
+	echo $images;
 ?>

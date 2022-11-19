@@ -336,9 +336,9 @@ public class Presentation : Interactable
     {
         WWWForm form = new WWWForm();
         form.AddField("microlesson_id", DBManager.microLesson.MicrolessonId);
-        form.AddField("upload_images", saveFolder);
         string post = $"http://{NetworkConstants.IpAddress}/sqlconnect/downloadPresentation.php";
         UnityWebRequest www = UnityWebRequest.Post(post, form);
+        www.SetRequestHeader("User-Agent", "Mozilla / 5.0(Windows NT 10.0; WOW64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 55.0.2883.87 Safari / 537.36");
         yield return www.SendWebRequest();
 
         if (www.isNetworkError || www.isHttpError)
@@ -347,72 +347,28 @@ public class Presentation : Interactable
         }
         else
         {
-            string[] serverData = www.downloadHandler.text.Split('\t');
+            string[] serverData = www.downloadHandler.text.Split('\n');
             if (serverData[0] == "0")
             {
-                SetUpImage();
+                string[] imageData;
+                for (int index = 1; index < serverData.Length-1; index++)
+                {
+                    imageData = serverData[index].Split('\t');
+                    string saveLocation;
+                    byte[] blob;
+                    if (imageData.Length == 2)
+                    {
+                        saveLocation = string.Format("{0}/{1}", saveFolder, imageData[0]);
+                        blob = Convert.FromBase64String(imageData[1]);
+                        File.WriteAllBytes(saveLocation, blob); // Requires System.IO
+                    }
+                    else
+                    {
+                        Debug.Log("No image data");
+                    }
+                }
             }
-        }
-
-        //using (UnityWebRequest www = UnityWebRequest.Get(url))
-        //{
-        //    www.SetRequestHeader("User-Agent", "Mozilla / 5.0(Windows NT 10.0; WOW64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 55.0.2883.87 Safari / 537.36");
-
-        //    yield return www.SendWebRequest();
-        //    if (www.isNetworkError || www.isHttpError)
-        //    {
-        //        Debug.Log(www.error);
-        //    }
-        //    else
-        //    {
-        //        File.WriteAllBytes(savePath, www.downloadHandler.data);
-        //        tex = LoadPNG(savePath);
-        //        gameObject.GetComponent<Renderer>().material.mainTexture = tex;
-        //        firstPersonPresentation.GetComponent<Renderer>().material.mainTexture = tex;
-        //    }
-        //}
-    }
-
-    private void Ftp(string path)
-    {
-        try
-        {
-            // ftp://epiz_33020157@ftpupload.net/htdocs/presentations
-            Uri serverUri = new Uri(path);
-            if (serverUri.Scheme != Uri.UriSchemeFtp)
-            {
-                return;
-            }
-            FtpWebRequest reqFTP;
-            reqFTP = (FtpWebRequest)WebRequest.Create(new Uri(path));
-            reqFTP.Credentials = new NetworkCredential("epiz_33020157", "UdsrAv45dd");
-            reqFTP.KeepAlive = false;
-            reqFTP.Method = WebRequestMethods.Ftp.DownloadFile;
-            reqFTP.UseBinary = true;
-            reqFTP.Proxy = null;
-            reqFTP.UsePassive = false;
-            FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
-            Stream responseStream = response.GetResponseStream();
-            FileStream writeStream = new FileStream(savePath, FileMode.Create);                
-
-            int Length = 2048;
-            Byte[] buffer = new Byte[Length];
-            int bytesRead = responseStream.Read(buffer, 0, Length);
-            while (bytesRead > 0)
-            {
-                writeStream.Write(buffer, 0, bytesRead);
-                bytesRead = responseStream.Read(buffer, 0, Length);
-            }
-            writeStream.Close();
-            response.Close();
-        }
-        catch (WebException wEx)
-        {
-            Debug.Log(wEx.Message);
-        }
-        catch (Exception ex)
-        {
-            Debug.Log(ex.Message);
+            SetUpImage();
         }
     }
 
