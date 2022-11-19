@@ -61,8 +61,11 @@ VoRtex prototype video (click below)
 VoRtex prototype build: https://mega.nz/folder/kQJkTL6L#tfWQAO-l6k7RXPdrubmYsg
 
 Install Requirement:
+
 •	Unity 2019.3.6f1 (64-bit)
+
 •	MAMP 4.1.0
+
 •	MySQL Workbench (8.0.22 or later)
 
 Set up the database
@@ -98,3 +101,5 @@ Unity VR support
 •	Change to First person mode (VR view) using "C" button on keyboard.
 
 Contact author for support.
+
+Reference: https://www.mdpi.com/2079-9292/11/3/317
