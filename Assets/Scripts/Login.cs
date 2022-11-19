@@ -190,5 +190,9 @@ public class Login : MonoBehaviour
             loadScene = false;
             GoToVirtualRoom();
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 }
