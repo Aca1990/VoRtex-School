@@ -22,7 +22,7 @@ public static class FaceRecognitionManager
         // make sure we can read the output from stdout 
         myProcessStartInfo.UseShellExecute = false;
         myProcessStartInfo.RedirectStandardOutput = true;
-        myProcessStartInfo.Arguments = @"C:\MAMP\htdocs\Python\face_recognize_webcam.py" + @" ..\" + DBManager.face_recognition_image_location;
+        myProcessStartInfo.Arguments = $"http://{NetworkConstants.IpAddress}/Python/face_recognize_webcam.py" + @" ..\" + DBManager.face_recognition_image_location;
 
         myProcess = new Process();
         // assign start information to the process 

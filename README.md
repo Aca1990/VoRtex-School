@@ -60,9 +60,27 @@ VoRtex prototype video (click below)
 
 VoRtex prototype build: https://mega.nz/folder/kQJkTL6L#tfWQAO-l6k7RXPdrubmYsg
 
-requirement: install MySQL Workbench (8.0.22 or later), MAMP 4.1.0
-set up the database:
+Requirement: install MySQL Workbench (8.0.22 or later), MAMP 4.1.0
+
+Set up the database
 - Import useraccess.sql and social.sql from VortexPrototype\SQLSetup
 - Copy data from VortexPrototype\MAMPSetup into C:\MAMP\htdocs
+
+IBM Watson setup
+Text to speech:Enable Prof. VoRtex voice, check ExampleAssistantV2 and setup Watson service
+Speech to text: Add Assets/Prefabs/ExampleStreaming.prefab inside scene
+More info: https://github.com/watson-developer-cloud/unity-sdk
+
+Blockchain
+Enable Assets/Scripts/WalletManager.cs script inside [ManagerComponents]
+More info: http://casopisi.junis.ni.ac.rs/index.php/FUAutContRob/article/view/4660
+Demo: https://www.youtube.com/watch?v=GFJWu-_wlcQ&t=18s&ab_channel=VoRtexteam
+
+Biometric check:
+Uncomment FaceRecognitionManager.Star inside source code.
+
+Unity VR support
+To enable VR for your game builds and the editor, open the Player Settings (menu: Edit > Project Settings > Player). Select Other Settings and check the Virtual Reality Supported checkbox.
+Change to First person mode (VR view) using "C" button on keyboard.
 
 Contact author for support.

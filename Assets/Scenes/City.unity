@@ -23997,7 +23997,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 1.8e-44}
+  m_BoundingSphereOverride: {x: 0, y: -0.0000000034870382, z: 6.14e-43, w: 1.05e-43}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -27611,11 +27611,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1444997364}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72eb9be40727fa341a6b73c24d702cb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iamApikey: 
+  serviceUrl: 
+  versionDate: 
+  assistantId: 
 --- !u!82 &1444997366
 AudioSource:
   m_ObjectHideFlags: 0
@@ -39516,6 +39520,11 @@ PrefabInstance:
       propertyPath: closeQRScannerButton
       value: 
       objectReference: {fileID: 1671153820}
+    - target: {fileID: 8298226352990154924, guid: c5a2134723b7152459ffae1fbb5192b2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8298226352990154925, guid: c5a2134723b7152459ffae1fbb5192b2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -40861,7 +40870,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 9.42e-43, y: -2.1237383e+10, z: 9.42e-43, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: -0.0000000027738771, z: 6.14e-43, w: 1.05e-43}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0

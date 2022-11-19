@@ -27,14 +27,11 @@ if video_capture is None or not video_capture.isOpened():
 script_location = os.path.dirname(os.path.realpath(__file__))
 
 # Load a sample picture and learn how to recognize it.
-#leonid_image = face_recognition.load_image_file(os.path.join(script_location,"leonid1.jpg"))
-#leonid_face_encoding = face_recognition.face_encodings(leonid_image)[0]
 print(os.path.join(script_location,  sys.argv[1]))
 aca_image = face_recognition.load_image_file(os.path.join(script_location,  sys.argv[1]))
 aca_face_encoding = face_recognition.face_encodings(aca_image)[0]
 
 known_faces = [
-   # leonid_face_encoding,
 	aca_face_encoding
 ]
 

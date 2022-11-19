@@ -376,7 +376,7 @@ public class WalletManager : MonoBehaviour {
         string etherBalance;
         string customTokenBalance;
 
-        yield return getBalanceRequest.SendRequest(address, Nethereum.RPC.Eth.DTOs.BlockParameter.CreateLatest());
+        yield return getBalanceRequest.SendRequest(address, BlockParameter.CreateLatest());
         if (getBalanceRequest.Exception == null)
         {
             etherBalance = UnitConversion.Convert.FromWei(getBalanceRequest.Result.Value).ToString();
