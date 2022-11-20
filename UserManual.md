@@ -43,7 +43,7 @@ Login/register on the web platform
 
 •	Web platform account is client account + @vortex.com (aca1990@vortex.com)
 
-![alt text](https://github.com/Aca1990/VoRtex-School/blob/master/Pictures/Webplatform.PNG?raw=true)
+![alt text](https://github.com/Aca1990/VoRtex-School/blob/master/Pictures/Webplatform.png?raw=true)
 
 Figure 3. Web platform landing page.
 
