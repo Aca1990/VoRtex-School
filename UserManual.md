@@ -43,22 +43,22 @@ Login/register on the web platform
 
 •	Web platform account is client account + @vortex.com (aca1990@vortex.com)
 
-![alt text](https://github.com/Aca1990/VoRtex-School/blob/master/Pictures/Webplatform.png?raw=true)
+![alt text](https://github.com/Aca1990/VoRtex-School/blob/master/Pictures/Webplatform.PNG?raw=true)
 
 Figure 3. Web platform landing page.
 
-![alt text](https://github.com/Aca1990/VoRtex-School/blob/master/Pictures/SocialPage.png?raw=true)
+![alt text](https://github.com/Aca1990/VoRtex-School/blob/master/Pictures/SocialPage.PNG?raw=true)
 
 Figure 4. Main page (click on user name).
 
 
 Create a microlesson and check the progress
 
-![alt text](https://github.com/Aca1990/VoRtex-School/blob/master/Pictures/CreateSelectMicrolesson.png?raw=true)
+![alt text](https://github.com/Aca1990/VoRtex-School/blob/master/Pictures/CreateSelectMicrolesson.PNG?raw=true)
 
 Figure 5. Create microlesson.
 
-![alt text](https://github.com/Aca1990/VoRtex-School/blob/master/Pictures/Progress.png?raw=true)
+![alt text](https://github.com/Aca1990/VoRtex-School/blob/master/Pictures/Progress.PNG?raw=true)
 
 Figure 6. Check progress.
 
