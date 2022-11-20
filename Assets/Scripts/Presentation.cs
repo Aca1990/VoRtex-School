@@ -158,10 +158,12 @@ public class Presentation : Interactable
                 {
                     var tokenContractService = GameObject.Find("[ManagerComponents]").GetComponent<TokenContractService>();
                     tokenContractService.SendFunds();
-                    DBManager.achievements.Add("MoveObject");
+                    //DBManager.achievements.Add("MoveObject");
 
                     UIManager canvas = GameObject.Find("Canvas").GetComponent(typeof(UIManager)) as UIManager;
                     canvas.addAchievements();
+
+                    VirtualSceneManager.GetVirtualSceneManager().CallAddPlayerAchievement("MoveObject");
                 }
                 else
                 {
