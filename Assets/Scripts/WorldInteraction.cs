@@ -42,10 +42,10 @@ public class WorldInteraction : NetworkBehaviour
             {
                 GetIInteraction(interactedObject.name);
             }
-            else if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                Application.Quit();
-            }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
     }
 
