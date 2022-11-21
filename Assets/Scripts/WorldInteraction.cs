@@ -43,10 +43,6 @@ public class WorldInteraction : NetworkBehaviour
                 GetIInteraction(interactedObject.name);
             }
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
     }
 
     void OnCollisionEnter(Collision other)

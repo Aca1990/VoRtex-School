@@ -53,7 +53,7 @@ public class Login : MonoBehaviour
                 Debug.Log("User logged in");
                 InfoText.text = "User logged in";
                 DBManager.username = nameField.text;
-                DBManager.achievements = new HashSet<string>(serverData[1].Split(',').ToList());
+                DBManager.achievements = string.IsNullOrWhiteSpace(serverData[1]) ? new HashSet<string>() : new HashSet<string>(serverData[1].Split(',').ToList());
                 DBManager.face_recognition_image_location = serverData[2];
                 Debug.Log(serverData[3]);
                 DBManager.role_id = Convert.ToInt32(serverData[3]);
@@ -70,7 +70,7 @@ public class Login : MonoBehaviour
                 if (DBManager.role_id == 1) // teacher
                 {
                     //load ip adress
-                    NetworkConstants.ServerIpAddress = GetPublicIp();//serverData[1];
+                    NetworkConstants.ServerIpAddress = GetLocalIPAddress();//serverData[1];
 
                     form = new WWWForm();
                     form.AddField("user_id", DBManager.id);

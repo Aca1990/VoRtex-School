@@ -74,7 +74,7 @@ public class UIManager : MonoBehaviour
         //image.GetComponent<Renderer>().material.mainTexture = tex;
     }
 
-    public void addAchievements()
+    public void AddAchievements()
     {
         string[] achievementsArray = new string[DBManager.achievements.Count];
         DBManager.achievements.CopyTo(achievementsArray);

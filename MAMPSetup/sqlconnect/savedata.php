@@ -34,8 +34,16 @@
 		echo("1");
 	}
 	else
-	{ 
-		$updateQuery = "UPDATE users SET achievements ='" .$existingAchievements . "," . $achievements . "' WHERE username='". $username . "';";
+	{
+        $updateQuery = "";
+        if ($existingAchievements == null || empty($existingAchievements))
+        {
+		    $updateQuery = "UPDATE users SET achievements ='" . $achievements . "' WHERE username='". $username . "';";
+        }
+        else
+        {
+		    $updateQuery = "UPDATE users SET achievements ='" .$existingAchievements . "," . $achievements . "' WHERE username='". $username . "';";
+        }
 		mysqli_query($con, $updateQuery) or die("8: UPDATE query failed"); // error code #8 - UPDATE query failed
 		echo("0");
 	}

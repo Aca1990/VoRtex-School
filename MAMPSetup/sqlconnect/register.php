@@ -35,7 +35,7 @@
 	$salt = "\$5\$rounds=5000\$" . "something" . $username . "\$";
 	$hash = crypt($password, $salt);
 
-	$insertuserquery = "INSERT INTO users (username, hash, salt, role_id) VALUES ('" . $username . "', '" . $hash . "', '" . $salt . "' , " . 2 . ");";
+	$insertuserquery = "INSERT INTO users (username, hash, salt, role_id, webplatform_email, microlesson_id) VALUES ('" . $username . "', '" . $hash . "', '" . $salt . "' , " . 2 . ",'" . $username . "@vortex.com', " . 1 . ");";
 	mysqli_query($con, $insertuserquery) or die("4: insert player query failed"); // error code #4 - insert query failed
 	echo("0");
 ?>

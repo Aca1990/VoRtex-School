@@ -14,6 +14,13 @@ public class VirtualSceneManager : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
     public void CallAddPlayerAchievement(string achievements)
     {
         StartCoroutine(SavePlayerAchievements(achievements));
@@ -40,7 +47,7 @@ public class VirtualSceneManager : MonoBehaviour
                 AddPlayerAchievement(achievements);
                 Debug.Log("Data saved");
             }
-            if(www.downloadHandler.text == "1")
+            else if(www.downloadHandler.text == "1")
             {
                 Debug.Log("Achievements already added");
             }
@@ -54,6 +61,8 @@ public class VirtualSceneManager : MonoBehaviour
     private void AddPlayerAchievement(string achievements)
     {
         DBManager.achievements.Add(achievements);
+        UIManager canvas = GameObject.Find("Canvas").GetComponent(typeof(UIManager)) as UIManager;
+        canvas.AddAchievements();
     }
 
     public static VirtualSceneManager GetVirtualSceneManager()

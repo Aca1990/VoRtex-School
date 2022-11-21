@@ -1,5 +1,6 @@
 using BeardedManStudios.Forge.Networking;
 using BeardedManStudios.Forge.Networking.Unity;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BeardedManStudios.Forge.Networking.Generated
@@ -11,15 +12,16 @@ namespace BeardedManStudios.Forge.Networking.Generated
 		public const byte RPC_TRANSMIT_MESSAGE = 0 + 5;
 		
 		public ChatterManagerNetworkObject networkObject = null;
+        public static List<ChatterManagerNetworkObject> networkObjects = new List<ChatterManagerNetworkObject>();
 
-		public override void Initialize(NetworkObject obj)
+        public override void Initialize(NetworkObject obj)
 		{
 			// We have already initialized this object
 			if (networkObject != null && networkObject.AttachedBehavior != null)
 				return;
 			
 			networkObject = (ChatterManagerNetworkObject)obj;
-			networkObject.AttachedBehavior = this;
+            networkObject.AttachedBehavior = this;
 
 			base.SetupHelperRpcs(networkObject);
 			networkObject.RegisterRpc("TransmitMessage", TransmitMessage, typeof(string), typeof(string));
@@ -65,7 +67,9 @@ namespace BeardedManStudios.Forge.Networking.Generated
 				}
 			}
 
-			MainThreadManager.Run(() =>
+            networkObjects.Add(networkObject);
+
+            MainThreadManager.Run(() =>
 			{
 				NetworkStart();
 				networkObject.Networker.FlushCreateActions(networkObject);

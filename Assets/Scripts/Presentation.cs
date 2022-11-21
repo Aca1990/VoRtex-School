@@ -70,6 +70,7 @@ public class Presentation : Interactable
 
             StartCoroutine(UploadSlides());
         }
+        objNetId = gameObject.GetComponent<NetworkIdentity>();        // get the object's network ID
     }
 
     private void SetSlideName()
@@ -92,7 +93,6 @@ public class Presentation : Interactable
                     //var oo = fooObj.GetComponent<NetworkIdentity>();
                     //if(userIdentityWithAuthority != oo)
                     //{
-                objNetId = gameObject.GetComponent<NetworkIdentity>();        // get the object's network ID
                 if (objNetId.clientAuthorityOwner != userIdentityWithAuthority.connectionToClient)
                 {
                     if (objNetId.hasAuthority || objNetId.clientAuthorityOwner != null)
@@ -150,26 +150,22 @@ public class Presentation : Interactable
     public override void CmdInteractF(GameObject obj)
     {
         Debug.Log("Interacting with Presentation using F command, go up");
-        if (slideNumber < imageCount) // Cound png items in folder
+        if (slideNumber < imageCount && (objNetId.hasAuthority || DBManager.role_id == 1)) // Cound png items in folder
         {
+            if (!DBManager.achievements.Contains("MoveObject"))
+            {
+                var tokenContractService = GameObject.Find("[ManagerComponents]").GetComponent<TokenContractService>();
+                tokenContractService.SendFunds();
+
+                VirtualSceneManager.GetVirtualSceneManager().CallAddPlayerAchievement("MoveObject");
+            }
+            else
+            {
+                var walletManager = GameObject.Find("[ManagerComponents]").GetComponent<WalletManager>();
+                walletManager.RefreshTopPanelView();
+            }
             if (isServer)
             {
-                if (!DBManager.achievements.Contains("MoveObject"))
-                {
-                    var tokenContractService = GameObject.Find("[ManagerComponents]").GetComponent<TokenContractService>();
-                    tokenContractService.SendFunds();
-                    //DBManager.achievements.Add("MoveObject");
-
-                    UIManager canvas = GameObject.Find("Canvas").GetComponent(typeof(UIManager)) as UIManager;
-                    canvas.addAchievements();
-
-                    VirtualSceneManager.GetVirtualSceneManager().CallAddPlayerAchievement("MoveObject");
-                }
-                else
-                {
-                    var walletManager = GameObject.Find("[ManagerComponents]").GetComponent<WalletManager>();
-                    walletManager.RefreshTopPanelView();
-                }
                 RpcLoadImage(true);
             }
             else
