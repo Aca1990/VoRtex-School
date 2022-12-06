@@ -9,7 +9,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 	public abstract partial class >:className:< : INetworkBehavior
 	{
 		>:FOREVERY constRpcs:<
-		public const byte RPC_>:[0]:< = >:[idx]:< + 5;
+		public const byte RPC_>:[0]:< = >:[idx]:< + 4;
 		>:ENDFOREVERY:<
 		
 		public >:networkObject:< networkObject = null;
@@ -29,9 +29,9 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			networkObject.RegistrationComplete();
 		}
 
-		public void Initialize(NetWorker networker)
+		public void Initialize(NetWorker networker, byte[] metadata  = null)
 		{
-			Initialize(new >:networkObject:<(networker));
+			Initialize(new >:networkObject:<(networker, metadata: metadata));
 		}
 
 		>:FOREVERY rpcs:<

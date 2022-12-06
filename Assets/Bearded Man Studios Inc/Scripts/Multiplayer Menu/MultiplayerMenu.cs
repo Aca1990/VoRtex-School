@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Net;
+using System.Net.Sockets;
 
 public class MultiplayerMenu : MonoBehaviour
 {
-	private string ipAddress = null;
-	private string portNumber = null;
+	public string ipAddress = null;
+	public string portNumber = null;
 	public bool DontChangeSceneOnConnect = false;
 	public string masterServerHost = string.Empty;
 	public ushort masterServerPort = 15940;
@@ -37,12 +39,8 @@ public class MultiplayerMenu : MonoBehaviour
 
 	private void Start()
 	{
-        if (server != null)
-        {
-            OnApplicationQuit();
-        }
-
-		ipAddress = NetworkConstants.ServerIpAddress; //"127.0.0.1"
+        NetworkConstants.ServerIpAddress = GetLocalIPAddress();
+        ipAddress = NetworkConstants.ServerIpAddress;
         portNumber = "15937";
 
         for (int i = 0; i < ToggledButtons.Length; ++i)
@@ -66,10 +64,21 @@ public class MultiplayerMenu : MonoBehaviour
 			NetWorker.localServerLocated += LocalServerLocated;
 			NetWorker.RefreshLocalUdpListings(ushort.Parse(portNumber));
 		}
+	}
 
+    private static string GetLocalIPAddress()
+    {
+        var host = Dns.GetHostEntry(Dns.GetHostName());
+        foreach (var ip in host.AddressList)
+        {
+            if (ip.AddressFamily == AddressFamily.InterNetwork)
+            {
+                return ip.ToString();
+            }
+        }
+        throw new System.Exception("No network adapters with an IPv4 address in the system!");
     }
-
-	private void LocalServerLocated(NetWorker.BroadcastEndpoints endpoint, NetWorker sender)
+    private void LocalServerLocated(NetWorker.BroadcastEndpoints endpoint, NetWorker sender)
 	{
 		Debug.Log("Found endpoint: " + endpoint.Address + ":" + endpoint.Port);
 	}
@@ -77,11 +86,10 @@ public class MultiplayerMenu : MonoBehaviour
 	public void Connect()
 	{
         ipAddress = NetworkConstants.ServerIpAddress;
-
         if (connectUsingMatchmaking)
 		{
 			ConnectToMatchmaking();
-            return;
+			return;
 		}
 		ushort port;
 		if(!ushort.TryParse(portNumber, out port))
@@ -92,14 +100,14 @@ public class MultiplayerMenu : MonoBehaviour
 
 		NetWorker client;
 
-        if (useTCP)
+		if (useTCP)
 		{
-            client = new TCPClient();
+			client = new TCPClient();
 			((TCPClient)client).Connect(ipAddress, (ushort)port);
 		}
 		else
 		{
-            client = new UDPClient();
+			client = new UDPClient();
 			if (natServerHost.Trim().Length == 0)
 				((UDPClient)client).Connect(ipAddress, (ushort)port);
 			else
@@ -156,7 +164,7 @@ public class MultiplayerMenu : MonoBehaviour
 			if (natServerHost.Trim().Length == 0)
 				((UDPServer)server).Connect(ipAddress, ushort.Parse(portNumber));
 			else
-				((UDPServer)server).Connect(ipAddress, port: ushort.Parse(portNumber), natHost: natServerHost, natPort: natServerPort);
+				((UDPServer)server).Connect(port: ushort.Parse(portNumber), natHost: natServerHost, natPort: natServerPort);
 		}
 
 		server.playerTimeout += (player, sender) =>
@@ -170,16 +178,16 @@ public class MultiplayerMenu : MonoBehaviour
 
 	private void Update()
 	{
-		//if (Input.GetKeyDown(KeyCode.H))
-		//	Host();
-		//else if (Input.GetKeyDown(KeyCode.C))
-		//	Connect();
-		//else if (Input.GetKeyDown(KeyCode.L))
-		//{
-		//	NetWorker.localServerLocated -= TestLocalServerFind;
-		//	NetWorker.localServerLocated += TestLocalServerFind;
-		//	NetWorker.RefreshLocalUdpListings();
-		//}
+		if (Input.GetKeyDown(KeyCode.H))
+			Host();
+		else if (Input.GetKeyDown(KeyCode.C))
+			Connect();
+		else if (Input.GetKeyDown(KeyCode.L))
+		{
+			NetWorker.localServerLocated -= TestLocalServerFind;
+			NetWorker.localServerLocated += TestLocalServerFind;
+			NetWorker.RefreshLocalUdpListings();
+		}
 	}
 
 	private void TestLocalServerFind(NetWorker.BroadcastEndpoints endpoint, NetWorker sender)
@@ -224,9 +232,9 @@ public class MultiplayerMenu : MonoBehaviour
 
 		if (networker is IServer)
 		{
-			if (DontChangeSceneOnConnect)
-				//SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-			//else
+			if (!DontChangeSceneOnConnect)
+				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+			else
 				NetworkObject.Flush(networker); //Called because we are already in the correct scene!
 		}
 	}

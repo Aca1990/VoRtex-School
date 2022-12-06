@@ -1,23 +1,4 @@
-﻿/*-----------------------------+-------------------------------\
-|                                                              |
-|                         !!!NOTICE!!!                         |
-|                                                              |
-|  These libraries are under heavy development so they are     |
-|  subject to make many changes as development continues.      |
-|  For this reason, the libraries may not be well commented.   |
-|  THANK YOU for supporting forge with all your feedback       |
-|  suggestions, bug reports and comments!                      |
-|                                                              |
-|                              - The Forge Team                |
-|                                Bearded Man Studios, Inc.     |
-|                                                              |
-|  This source code, project files, and associated files are   |
-|  copyrighted by Bearded Man Studios, Inc. (2012-2017) and    |
-|  may not be redistributed without written permission.        |
-|                                                              |
-\------------------------------+------------------------------*/
-
-using BeardedManStudios.Forge.Networking.DataStore;
+﻿using BeardedManStudios.Forge.Networking.DataStore;
 using BeardedManStudios.Forge.Networking.Frame;
 using BeardedManStudios.Source.Forge.Networking;
 using BeardedManStudios.Threading;
@@ -638,8 +619,7 @@ namespace BeardedManStudios.Forge.Networking
 					if (!networkObject.RegisterOnce(id))
 						throw new BaseNetworkException("The supplied network object has already been assigned to a networker and has an id");
 
-					//AddNetworkObject(forceId, networkObject);
-					//NetworkObjectList.Add(networkObject);
+					CompleteInitialization(networkObject);
 				}
 				else
 				{
@@ -656,8 +636,7 @@ namespace BeardedManStudios.Forge.Networking
 							throw new BaseNetworkException("The supplied network object has already been assigned to a networker and has an id");
 						}
 
-						//AddNetworkObject(currentNetworkObjectId, networkObject);
-						//NetworkObjectList.Add(networkObject);
+						CompleteInitialization(networkObject);
 						break;
 					} while (IsBound);
 				}

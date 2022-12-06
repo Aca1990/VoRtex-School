@@ -1,23 +1,4 @@
-﻿/*-----------------------------+-------------------------------\
-|                                                              |
-|                         !!!NOTICE!!!                         |
-|                                                              |
-|  These libraries are under heavy development so they are     |
-|  subject to make many changes as development continues.      |
-|  For this reason, the libraries may not be well commented.   |
-|  THANK YOU for supporting forge with all your feedback       |
-|  suggestions, bug reports and comments!                      |
-|                                                              |
-|                              - The Forge Team                |
-|                                Bearded Man Studios, Inc.     |
-|                                                              |
-|  This source code, project files, and associated files are   |
-|  copyrighted by Bearded Man Studios, Inc. (2012-2017) and    |
-|  may not be redistributed without written permission.        |
-|                                                              |
-\------------------------------+------------------------------*/
-
-using BeardedManStudios.Forge.Networking.Frame;
+﻿using BeardedManStudios.Forge.Networking.Frame;
 using BeardedManStudios.Source.Forge.Networking;
 using BeardedManStudios.Threading;
 using System;
@@ -198,7 +179,7 @@ namespace BeardedManStudios.Forge.Networking
 		public INetworkBehavior AttachedBehavior { get; set; }
 
 		/// <summary>
-		/// Occurs when the pending behavior supplied has been initialized 
+		/// Occurs when the pending behavior supplied has been initialized
 		/// </summary>
 		public event NetworkBehaviorEvent pendingInitialized;
 
@@ -472,7 +453,13 @@ namespace BeardedManStudios.Forge.Networking
 
 				Binary createdFrame = new Binary(Networker.Time.Timestep, Networker is TCPClient, createdByteData, Receivers.Server, MessageGroupIds.GetId("NO_CREATED_" + NetworkId), Networker is BaseTCP, RouterIds.CREATED_OBJECT_ROUTER_ID);
 
-				if (networker is UDPClient)
+#if STEAMWORKS
+                if (networker is SteamP2PClient)
+                    ((SteamP2PClient)networker).Send(createdFrame, true);
+                else if (networker is UDPClient)
+#else
+                if (networker is UDPClient)
+#endif
 					((UDPClient)networker).Send(createdFrame, true);
 				else
 					((TCPClient)networker).Send(createdFrame);
@@ -1135,6 +1122,21 @@ namespace BeardedManStudios.Forge.Networking
 			SendRpc(targetPlayer, methodId, false, true, Receivers.Target, Networker.Me, args);
 		}
 
+		/// <summary>
+		/// Build the network frame (message) data for this RPC call so that it is properly
+		/// delegated on the network
+		/// </summary>
+		/// <param name="targetPlayers">An array of <see cref="NetworkingPlayer"/>s to send this RPC from the server</param>
+		/// <param name="methodId">The id of the RPC to be called</param>
+		/// <param name="args">The input arguments for the method call</param>
+		public void SendRpc(NetworkingPlayer[] targetPlayers, byte methodId, params object[] args)
+		{
+			for (int i = 0; i < targetPlayers.Length; i++)
+			{
+				SendRpc(targetPlayers[i], methodId, false, true, Receivers.Target, Networker.Me, args);
+			}
+		}
+
         /// <summary>
         /// Build the network frame (message) data for this RPC call so that it is properly
         /// delegated on the network
@@ -1228,7 +1230,7 @@ namespace BeardedManStudios.Forge.Networking
 					return;
 				}
 			}
-			
+
 			// Map the behavior flags to the rpc
 			byte behaviorFlags = 0;
 			behaviorFlags |= replacePrevious ? RPC_BEHAVIOR_OVERWRITE : (byte)0;
@@ -1467,7 +1469,7 @@ namespace BeardedManStudios.Forge.Networking
 				lastUpdateTimestep = timeStep;
 			}
 		}
-        
+
 
         public void setProximityFields(bool useProximity, Receivers mode = Receivers.AllProximity)
         {

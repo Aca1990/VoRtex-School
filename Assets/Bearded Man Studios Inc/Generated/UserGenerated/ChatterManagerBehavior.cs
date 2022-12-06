@@ -67,13 +67,12 @@ namespace BeardedManStudios.Forge.Networking.Generated
 				}
 			}
 
-            networkObjects.Add(networkObject);
-
             MainThreadManager.Run(() =>
 			{
 				NetworkStart();
 				networkObject.Networker.FlushCreateActions(networkObject);
-			});
+                networkObjects.Add(networkObject);
+            });
 		}
 
 		protected override void CompleteRegistration()
