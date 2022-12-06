@@ -605,6 +605,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: PresentationPlane
       objectReference: {fileID: 0}
+    - target: {fileID: 4832834583476480400, guid: 5e38b5165d3bb2f4bb1ea92f6d18311d,
+        type: 3}
+      propertyPath: m_TagString
+      value: Presentation
+      objectReference: {fileID: 0}
+    - target: {fileID: 4832834583476480400, guid: 5e38b5165d3bb2f4bb1ea92f6d18311d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e38b5165d3bb2f4bb1ea92f6d18311d, type: 3}
 --- !u!1 &33854114 stripped
@@ -15274,6 +15284,7 @@ GameObject:
   - component: {fileID: 838001067}
   - component: {fileID: 838001066}
   - component: {fileID: 838001065}
+  - component: {fileID: 838001069}
   m_Layer: 0
   m_Name: ThirdPersonCamera
   m_TagString: MainCamera
@@ -15362,6 +15373,14 @@ Transform:
   m_Father: {fileID: 254600011}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 16.064001, y: 290, z: 0}
+--- !u!81 &838001069
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838001064}
+  m_Enabled: 1
 --- !u!1001 &839603770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23997,7 +24016,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 3.06958, z: 5.59e-43, w: 1.28e-43}
+  m_BoundingSphereOverride: {x: 0, y: 1.435e-42, z: 0, w: 2.2e-44}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -28622,6 +28641,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3061254423676142694, guid: 23b2659d39f8445429ea3403532f4236,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8226724603749760139, guid: 23b2659d39f8445429ea3403532f4236,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -32695,7 +32719,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1272793635194392, guid: 19ff95008e530d84db3aa7d29983b724, type: 3}
       propertyPath: m_Name
-      value: Exotic_1
+      value: Automobile
+      objectReference: {fileID: 0}
+    - target: {fileID: 1272793635194392, guid: 19ff95008e530d84db3aa7d29983b724, type: 3}
+      propertyPath: m_TagString
+      value: Interactable
       objectReference: {fileID: 0}
     - target: {fileID: 4919319124548610, guid: 19ff95008e530d84db3aa7d29983b724, type: 3}
       propertyPath: m_LocalPosition.x
@@ -32792,6 +32820,148 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1712676389}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1712676394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712676390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d3d9896f6c434e40b019328b7aa2ac9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  userIdentityWithAuthority: {fileID: 0}
+--- !u!114 &1712676395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712676390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8258ea15b8f74c4889ce485d21cbbb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 25
+    i1: 255
+    i2: 149
+    i3: 0
+    i4: 142
+    i5: 83
+    i6: 13
+    i7: 132
+    i8: 219
+    i9: 58
+    i10: 167
+    i11: 210
+    i12: 153
+    i13: 131
+    i14: 183
+    i15: 36
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!82 &1712676396
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712676390}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: ce5dba819fe3d8246bcc596d413b5605, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1718059237
 GameObject:
   m_ObjectHideFlags: 0
@@ -40870,7 +41040,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 9.643051}
+  m_BoundingSphereOverride: {x: 7.29e-43, y: 4.8348e-41, z: 0, w: -1}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0

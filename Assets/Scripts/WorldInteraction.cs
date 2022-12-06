@@ -25,6 +25,18 @@ public class WorldInteraction : NetworkBehaviour
         //}
         // find change camera
         changeCamera = gameObject.GetComponent<ChangeCamera>();
+
+        var interactables = FindAllInteractableObjects("Interactable");
+        bool active = false;
+        if (DBManager.microLesson.InteractablesON)
+        {
+            active = true;
+        }
+
+        foreach (GameObject go in interactables)
+        {
+            go.SetActive(active);
+        }
     }
 
     // Update is called once per frame
@@ -55,7 +67,11 @@ public class WorldInteraction : NetworkBehaviour
 
             if (interactedObject.tag == "Interactable")
             {
-                UIManager.show = true;
+                UIManager.showModelInfo = true;
+            }
+            else if (interactedObject.tag == "Presentation")
+            {
+                UIManager.showPresenterInfo = true;
             }
         }
     }
@@ -67,7 +83,8 @@ public class WorldInteraction : NetworkBehaviour
             Debug.Log("OnCollisionExit");
             interactionReady = false;
             interactedObject = null;
-            UIManager.show = false;
+            UIManager.showPresenterInfo = false;
+            UIManager.showModelInfo = false;
         }
     }
 
@@ -131,6 +148,7 @@ public class WorldInteraction : NetworkBehaviour
             case "PresentationPlane":
             case "PresentationPlane(Clone)":
             case "VideoPlane":
+            case "Automobile":
                 {
                     interactedObject.GetComponent<Interactable>().CmdInteractI(gameObject);
                     break;
@@ -141,6 +159,13 @@ public class WorldInteraction : NetworkBehaviour
                     break;
                 }
         }
+    }
+    GameObject[] FindAllInteractableObjects(string tagName)
+    {
+        GameObject[] gos;
+        gos = GameObject.FindGameObjectsWithTag(tagName);
+
+        return gos;
     }
 
 }

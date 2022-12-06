@@ -32,45 +32,50 @@ public class Presentation : Interactable
 
     void Start()
     {
-        slideNumber = 1;
-        PresentationCameraActive = false;
-        slideName = "slide1.png";
-        Debug.Log("Presentation loaded");
-
-        // set first person camera
-        firstPersonPresentation = gameObject.transform.GetChild(0).gameObject;
-        Debug.Log(firstPersonPresentation.name);
-        firstPersonPresentationCamera = firstPersonPresentation.transform.GetChild(0).gameObject;
-        Debug.Log(firstPersonPresentationCamera.name);
-        firstPersonPresentationCamera.SetActive(false);
-
-        //set up initial slide
-        //path = @"C:\MAMP\htdocs\presentations\acauser123\virtual_reality\slide1.png";
-        saveFolder = string.Format("{0}/{1}", Application.persistentDataPath, DBManager.microLesson.LessonName);
-        savePath = string.Format("{0}/{1}", saveFolder, slideName);
-
-        if (File.Exists(savePath))
+        if (DBManager.microLesson.PresentationON)
         {
-            SetUpImage();
-        }
-        else
-        {
-            try
+            slideNumber = 1;
+            PresentationCameraActive = false;
+            slideName = "slide1.png";
+            Debug.Log("Presentation loaded");
+            gameObject.tag = "Presentation";
+
+            // set first person camera
+            firstPersonPresentation = gameObject.transform.GetChild(0).gameObject;
+            firstPersonPresentation.tag = "Presentation";
+            Debug.Log(firstPersonPresentation.name);
+            firstPersonPresentationCamera = firstPersonPresentation.transform.GetChild(0).gameObject;
+            Debug.Log(firstPersonPresentationCamera.name);
+            firstPersonPresentationCamera.SetActive(false);
+
+            //set up initial slide
+            //path = @"C:\MAMP\htdocs\presentations\acauser123\virtual_reality\slide1.png";
+            saveFolder = string.Format("{0}/{1}", Application.persistentDataPath, DBManager.microLesson.LessonName);
+            savePath = string.Format("{0}/{1}", saveFolder, slideName);
+
+            if (File.Exists(savePath))
             {
-                if (!Directory.Exists(saveFolder))
+                SetUpImage();
+            }
+            else
+            {
+                try
                 {
-                    Directory.CreateDirectory(saveFolder);
+                    if (!Directory.Exists(saveFolder))
+                    {
+                        Directory.CreateDirectory(saveFolder);
+                    }
+
+                }
+                catch (IOException ex)
+                {
+                    Debug.Log(ex.Message);
                 }
 
+                StartCoroutine(UploadSlides());
             }
-            catch (IOException ex)
-            {
-                Debug.Log(ex.Message);
-            }
-
-            StartCoroutine(UploadSlides());
+            objNetId = gameObject.GetComponent<NetworkIdentity>();        // get the object's network ID
         }
-        objNetId = gameObject.GetComponent<NetworkIdentity>();        // get the object's network ID
     }
 
     private void SetSlideName()

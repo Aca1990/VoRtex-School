@@ -66,11 +66,15 @@ public class Login : MonoBehaviour
                 Debug.Log(@"C:\MAMP\htdocs\Python\face_recognize_webcam.py" + @" ..\" + DBManager.face_recognition_image_location);
                 Debug.Log(DBManager.microLesson.presentation_ppt_content);
 
+                // enable interactable and Presentation objecets
+                DBManager.microLesson.InteractablesON = true;
+                DBManager.microLesson.PresentationON = true;
+
                 MultiplayerMenu sn = multiPlayerMenu.GetComponent<MultiplayerMenu>();
                 if (DBManager.role_id == 1) // teacher
                 {
                     //load ip adress
-                    NetworkConstants.ServerIpAddress = GetLocalIPAddress();//serverData[1];
+                    NetworkConstants.ServerIpAddress = GetLocalIPAddress(); // GetPublicIp();//serverData[1];
 
                     form = new WWWForm();
                     form.AddField("user_id", DBManager.id);

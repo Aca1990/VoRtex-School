@@ -14,14 +14,10 @@ public class ChatterManager : ChatterManagerBehavior
         {
             sender.text = sender.text.Replace("\r", string.Empty).Replace("\n", string.Empty);
 
-            foreach (var obj in ChatterManagerBehavior.networkObjects)
-            {
-                obj.SendRpc(RPC_TRANSMIT_MESSAGE, Receivers.All, DBManager.username, sender.text.Trim());
-                //networkObject.SendRpc(RPC_TRANSMIT_MESSAGE, Receivers.All, DBManager.username, sender.text.Trim());
-                Debug.Log(sender.text);
-                sender.text = string.Empty;
-                sender.ActivateInputField();
-            }
+            networkObject.SendRpc(RPC_TRANSMIT_MESSAGE, Receivers.All, DBManager.username, sender.text.Trim());
+            Debug.Log(sender.text);
+            sender.text = string.Empty;
+            sender.ActivateInputField();
         }
     }
     public override void TransmitMessage(RpcArgs args)
@@ -38,4 +34,41 @@ public class ChatterManager : ChatterManagerBehavior
 
         content.text = string.Format(content.text, username, message);
     }
+
+    /*
+     	public override void SendMessage(RpcArgs args)
+	{
+		string username = args.GetNext<string>();
+		string message = args.GetNext<string>();
+
+		Text label = null;
+		if (messageLabels.Count == maxMessages)
+		{
+			label = messageLabels[0];
+			messageLabels.RemoveAt(0);
+			label.transform.SetAsLastSibling();
+		}
+		else
+			label = (Instantiate(messageLabel, contentTransform) as GameObject).GetComponent<Text>();
+
+		messageLabels.Add(label);
+		label.text = username + ": " + message;
+	}
+
+	public void SendMessage()
+	{
+		string message = messageInput.text.Trim();
+		if (string.IsNullOrEmpty(message))
+			return;
+
+		string name = networkObject.Networker.Me.Name;
+
+		if (string.IsNullOrEmpty(name))
+			name = NetWorker.InstanceGuid.ToString().Substring(0, 5);
+
+		networkObject.SendRpc(RPC_SEND_MESSAGE, Receivers.All, name, message);
+		messageInput.text = "";
+		messageInput.Select();
+	}
+     */
 }

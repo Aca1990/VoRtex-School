@@ -16,7 +16,8 @@ public class UIManager : MonoBehaviour
 
     private Rect windowRect;
     // Only show it if needed.
-    public static bool show = false;
+    public static bool showPresenterInfo = false;
+    public static bool showModelInfo = false;
 
     private void Start()
     {
@@ -98,21 +99,38 @@ public class UIManager : MonoBehaviour
 
     void OnGUI()
     {
-        if (show)
+        if (showPresenterInfo)
         {
-            windowRect = GUI.Window(0, windowRect, DialogWindow, "Commands info"); // TODO: move from onGUI
+            showModelInfo = false;
+            windowRect = GUI.Window(0, windowRect, DialogWindowPresentation, "Commands info"); // TODO: move from onGUI
+        }
+        else if (showModelInfo)
+        {
+            showPresenterInfo = false;
+            windowRect = GUI.Window(0, windowRect, DialogWindowModel, "Commands info");
         }
     }
 
     // This is the actual window.
-    void DialogWindow(int windowID)
+    void DialogWindowPresentation(int windowID)
     {
         float y = 20;
         GUI.Label(new Rect(5, y, windowRect.width, 20), "Press Buttons F,E or I");
 
         if (GUI.Button(new Rect(5, y+20, windowRect.width - 10, 20), "OK"))
         {
-            show = false;
+            showPresenterInfo = false;
+        }
+    }
+
+    void DialogWindowModel(int windowID)
+    {
+        float y = 20;
+        GUI.Label(new Rect(5, y, windowRect.width, 20), "Press Button I");
+
+        if (GUI.Button(new Rect(5, y + 20, windowRect.width - 10, 20), "OK"))
+        {
+            showModelInfo = false;
         }
     }
 }

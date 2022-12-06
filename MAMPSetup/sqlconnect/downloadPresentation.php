@@ -21,20 +21,20 @@
 	}
 
 	// check if name exists
-	$namecheckquery = "SELECT presentation.imgTitle, presentation.imgType, presentation.imgData FROM presentation WHERE presentation.microlesson_id='". $microlesson_id . "';";
+	$namecheckquery = "SELECT presentation.microlesson_id, presentation.imgTitle, presentation.imgType, presentation.imgData FROM presentation WHERE presentation.microlesson_id='1' OR presentation.microlesson_id='". $microlesson_id . "';";
 
 	$namecheck = mysqli_query($con, $namecheckquery) or die("2: name check query failed " . $microlesson_id); // error code #2 - name check query failed
+    $count = mysqli_num_rows($namecheck);
 
 	$images = "0\n";
 	while ($row = mysqli_fetch_array($namecheck)) {
-		$imgtitle = $row["imgTitle"];	
-		$imgtype = $row["imgType"];
-		//$imgfile = join(DIRECTORY_SEPARATOR, array($imglocation, $imgtitle));
-	    $blob = $row["imgData"];
-		//$data = base64_decode($blob);
-		#echo $data;
-		#file_put_contents($imgfile, $data);
-		$images = $images . "$imgtitle\t$blob" . "\n";
+        if (($count > 1 && presentation.microlesson_id != 1) || $count = 1)
+        {
+            $imgtitle = $row["imgTitle"];
+            $imgtype = $row["imgType"];
+            $blob = $row["imgData"];
+            $images = $images . "$imgtitle\t$blob" . "\n";
+        }
 	}
 	
 	echo $images;
