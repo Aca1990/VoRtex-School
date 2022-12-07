@@ -32,8 +32,6 @@ public class Presentation : Interactable
 
     void Start()
     {
-        if (DBManager.microLesson.PresentationON)
-        {
             slideNumber = 1;
             PresentationCameraActive = false;
             slideName = "slide1.png";
@@ -75,6 +73,11 @@ public class Presentation : Interactable
                 StartCoroutine(UploadSlides());
             }
             objNetId = gameObject.GetComponent<NetworkIdentity>();        // get the object's network ID
+   
+        if (!DBManager.microLesson.PresentationON)
+        {
+            gameObject.GetComponent<Renderer>().enabled = false;
+            gameObject.GetComponent<BoxCollider>().enabled = false;
         }
     }
 

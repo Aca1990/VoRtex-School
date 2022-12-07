@@ -46,9 +46,9 @@
 		exit();
 	}
 	
-	$microlessoncheckquery = "SELECT microlessons.lesson_name, microlessons.lesson_environment_id, microlessons.study_group_id FROM microlessons WHERE microlessons.microlesson_id='". $loginInfo["microlesson_id"] . "';";
+	$microlessoncheckquery = "SELECT microlessons.lesson_name, microlessons.lesson_environment_id, microlessons.study_group_id, microlessons.presentation_on, microlessons.interactables_on FROM microlessons WHERE microlessons.microlesson_id='". $loginInfo["microlesson_id"] . "';";
 	$microlessonnamecheck = mysqli_query($con, $microlessoncheckquery) or die("2: microlesson check query failed " . $username); // error code #2 - name check query failed
 	$microlessonInfo = mysqli_fetch_assoc($microlessonnamecheck);
 
-	echo "0\t" . $loginInfo["achievements"] . "\t" . $loginInfo["face_recognition_image"] . "\t" . $loginInfo["role_id"] . "\t" . $loginInfo["id"] . "\t" . $microlessonInfo["lesson_name"] . "\t" . $microlessonInfo["lesson_environment_id"] . "\t" . $loginInfo["microlesson_id"];
+	echo "0\t" . $loginInfo["achievements"] . "\t" . $loginInfo["face_recognition_image"] . "\t" . $loginInfo["role_id"] . "\t" . $loginInfo["id"] . "\t" . $microlessonInfo["lesson_name"] . "\t" . $microlessonInfo["lesson_environment_id"] . "\t" . $loginInfo["microlesson_id"] . "\t" . $microlessonInfo["presentation_on"] . "\t" . $microlessonInfo["interactables_on"];
 ?>

@@ -6,6 +6,9 @@ $group = ""; //Study group name
 $name = ""; //Microlesson name
 $user_id = ""; // user id
 $microlesson_id; // selected microlesson
+$user_id = ""; // user id
+$presentation_on = "0"; // presentation checked if 1
+$interactables_on = "0"; // interactables checked if 1
 $error_array_ml = array(); //Holds error messages
 
 if(isset($_POST['create_lesson'])){
@@ -29,6 +32,19 @@ if(isset($_POST['create_lesson'])){
 	$user_id = strip_tags($_POST['userId']); //Remove html tags
 	$user_id = str_replace(' ', '', $user_id); //remove spaces
 	$_SESSION['userId'] = $user_id; //Stores into session variable
+	
+	$checkbox_interactables = "{$_POST['interactables_on']}";
+	$checkbox_presentation = "{$_POST['presentation_on']}";
+
+	if($checkbox_interactables == 'interactables_on'){
+		// yes, it is checked
+		$interactables_on = "1";
+	}
+	
+	if($checkbox_presentation == 'presentation_on'){
+		// yes, it is checked
+		$presentation_on = "1";
+	}
 
 	if(strlen($name) > 25 || strlen($name) < 2) {
 		array_push($error_array_ml, "Microlesson name must be between 2 and 25 characters<br>");
@@ -46,7 +62,7 @@ if(isset($_POST['create_lesson'])){
 			$check_name_query = mysqli_query($con_users, "SELECT lesson_name FROM microlessons WHERE lesson_name='$name'");
 		}
 
-        $exe_query = "INSERT INTO microlessons VALUES (null, '$name', null, '$user_id', '$environment', '$group')";
+        $exe_query = "INSERT INTO microlessons VALUES (null, '$name', null, '$user_id', '$environment', '$group', '$presentation_on', '$interactables_on')";
 		$query = mysqli_query($con_users, $exe_query)or die($exe_query);
 
 		array_push($error_array_ml, "<span style='color: #14C800;'>Microlesson Added!</span><br>");

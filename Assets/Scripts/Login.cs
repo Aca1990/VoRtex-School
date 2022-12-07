@@ -67,8 +67,8 @@ public class Login : MonoBehaviour
                 Debug.Log(DBManager.microLesson.presentation_ppt_content);
 
                 // enable interactable and Presentation objecets
-                DBManager.microLesson.InteractablesON = true;
-                DBManager.microLesson.PresentationON = true;
+                DBManager.microLesson.PresentationON = Convert.ToBoolean(Convert.ToInt32(serverData[8]));
+                DBManager.microLesson.InteractablesON = Convert.ToBoolean(Convert.ToInt32(serverData[9]));
 
                 MultiplayerMenu sn = multiPlayerMenu.GetComponent<MultiplayerMenu>();
                 if (DBManager.role_id == 1) // teacher

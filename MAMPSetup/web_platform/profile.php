@@ -9,7 +9,7 @@ if(isset($_GET['profile_username'])) {
 	$username = $_GET['profile_username'];
 	$user_details_query = mysqli_query($con, "SELECT * FROM users WHERE username='$username'");
 	$user_array = mysqli_fetch_array($user_details_query);
-
+    $user_email = $user_array['email'];
 	$num_friends = (substr_count($user_array['friend_array'], ",")) - 1;
 }
 
@@ -157,7 +157,7 @@ if(isset($_POST['post_message'])) {
         <div class="message_post">
 			<form action="<?php echo $username; ?>" method="POST">
 				<?php
-					$sql_user = "SELECT users.id,users.role_id,users.microlesson_id  FROM users WHERE users.webplatform_username='". $username . "';";
+					$sql_user = "SELECT users.id,users.role_id,users.microlesson_id  FROM users WHERE users.webplatform_email='". $user_email . "';";
 					$result = mysqli_query($con_users, $sql_user);
 					$userInfo = mysqli_fetch_assoc($result); // role id equal 1 can use platform	
 					$user_id = $userInfo["id"];
@@ -181,6 +181,24 @@ if(isset($_POST['post_message'])) {
 				<br>
 				<?php if(in_array("Microlesson name must be between 2 and 25 characters<br>", $error_array_ml)) echo "Microlesson name must be between 2 and 25 characters<br>"; ?>		
 				<br>
+				
+				<input <?php echo $role_id>1 ? 'type="hidden"' : 'type="checkbox"'; ?> id="presentation_on" name="presentation_on" value="presentation_on" checked>
+				<?php
+					if($role_id==1)
+					{
+						echo "<label for='presentation_on'>Presentation</label>";
+						echo "<br>";
+					}
+				?>
+				
+				<input <?php echo $role_id>1 ? 'type="hidden"' : 'type="checkbox"'; ?> id="interactables_on" name="interactables_on" value="interactables_on">
+				<?php
+					if($role_id==1)
+					{
+						echo "<label for='interactables_on'>Interactables</label>";
+						echo "<br>";
+					}
+				?>
 				
 				<input type="hidden" id="userId" name="userId" value="<?php echo $user_id; ?>">
 	
@@ -295,6 +313,24 @@ if(isset($_POST['post_message'])) {
 				}
 				echo "<br>";
 			}
+            else
+            {
+				$sql_students = "SELECT users.username,users.achievements,microlessons.lesson_name FROM users INNER JOIN microlessons ON users.microlesson_id=microlessons.microlesson_id WHERE users.id='". $user_id . "';";
+				$result_students = mysqli_query($con_users, $sql_students)or die($sql_students);
+
+                $loginInfo = mysqli_fetch_assoc($result_students);
+                $usernameclient = $loginInfo["username"];
+                $achievements = $loginInfo["achievements"];
+                $lesson_name = $loginInfo["lesson_name"];
+                echo "<b>User Name</b>";
+                echo "<p>$usernameclient</p>";			
+                echo "<b>Achievements</b>";
+                echo "<p>$achievements</p>";				
+                echo "<b>Microlesson</b>";
+                echo "<p>$lesson_name</p>";					
+                echo "<br>";
+				echo "<br>";                
+            }
 			?>
         </div>
 
