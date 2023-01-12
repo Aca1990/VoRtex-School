@@ -116,7 +116,12 @@ public class NetworkManagerHUDCustom : MonoBehaviour
                 //manager.networkAddress = GUI.TextField(new Rect(xpos + 100, ypos, 95, 20), manager.networkAddress);
 
                 ////Getting the user selected player option from GUI so that it related object player should be instantiated
-                useMaleCharacter = GUI.Toggle(new Rect(xpos + 100 + 100, ypos, 135, 20), useMaleCharacter, "use male character");
+                //useMaleCharacter = GUI.Toggle(new Rect(xpos + 100 + 100, ypos, 135, 20), useMaleCharacter, "use male character");
+                if (DBManager.avatar_type_id == "1") // avatar male model
+                {
+                    useMaleCharacter = true;
+                }
+
                 if (useMaleCharacter)
                 {
                     GetComponent<NetworkManagerCustom>().playerPrefabIndex = 1;

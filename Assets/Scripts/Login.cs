@@ -38,6 +38,10 @@ public class Login : MonoBehaviour
         string fullAddress = $"http://{address}/sqlconnect/login.php";
         UnityWebRequest www = UnityWebRequest.Post(fullAddress, form); // http://vortex-webplatform.great-site.net/sqlconnect/login.php
         www.SetRequestHeader("User-Agent", "Mozilla / 5.0(Windows NT 10.0; WOW64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 55.0.2883.87 Safari / 537.36");
+        //www.SetRequestHeader("Access-Control-Allow-Origin", "*");
+        //www.SetRequestHeader("Access-Control-Allow-Credentials", "true");
+        //www.SetRequestHeader("Access-Control-Allow-Headers", "Accept, X-Access-Token, X-Application-Name, X-Request-Sent-Time");
+        //www.SetRequestHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
         yield return www.SendWebRequest();
 
         if (www.isNetworkError || www.isHttpError)
@@ -69,6 +73,9 @@ public class Login : MonoBehaviour
                 // enable interactable and Presentation objecets
                 DBManager.microLesson.PresentationON = Convert.ToBoolean(Convert.ToInt32(serverData[8]));
                 DBManager.microLesson.InteractablesON = Convert.ToBoolean(Convert.ToInt32(serverData[9]));
+
+                // set up avatar type model
+                DBManager.avatar_type_id = serverData[10];
 
                 MultiplayerMenu sn = multiPlayerMenu.GetComponent<MultiplayerMenu>();
                 if (DBManager.role_id == 1) // teacher

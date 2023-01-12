@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Host: sql213.epizy.com
--- Generation Time: Nov 21, 2022 at 07:55 AM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.2.22
+-- Host: localhost:3306
+-- Generation Time: Jan 11, 2023 at 11:09 PM
+-- Server version: 5.7.24-log
+-- PHP Version: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `epiz_33020157_useraccess`
+-- Database: `useraccess`
 --
 
 -- --------------------------------------------------------
@@ -32,6 +32,25 @@ CREATE TABLE `achievements` (
   `achievement_id` int(11) NOT NULL,
   `name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `avatar_type`
+--
+
+CREATE TABLE `avatar_type` (
+  `avatar_type_id` int(11) NOT NULL,
+  `name` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `avatar_type`
+--
+
+INSERT INTO `avatar_type` (`avatar_type_id`, `name`) VALUES
+(1, 'Male'),
+(2, 'Female');
 
 -- --------------------------------------------------------
 
@@ -51,9 +70,7 @@ CREATE TABLE `hostingaddresses` (
 
 INSERT INTO `hostingaddresses` (`hosting_id`, `user_id`, `address`) VALUES
 (1, 3, '192.168.1.10'),
-(2, 2, '123.32.123.1'),
-(9, 13, '192.168.1.10'),
-(10, 14, '192.168.1.10');
+(2, 2, '123.32.123.1');
 
 -- --------------------------------------------------------
 
@@ -87,26 +104,31 @@ CREATE TABLE `microlessons` (
   `presentation_ppt_content` varchar(100) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   `lesson_environment_id` int(11) NOT NULL,
-  `study_group_id` int(11) NOT NULL
+  `study_group_id` int(11) NOT NULL,
+  `presentation_on` tinyint(1) NOT NULL DEFAULT '0',
+  `interactables_on` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `microlessons`
 --
 
-INSERT INTO `microlessons` (`microlesson_id`, `lesson_name`, `presentation_ppt_content`, `user_id`, `lesson_environment_id`, `study_group_id`) VALUES
-(1, 'virtual_reality', NULL, 3, 2, 1),
-(4, 'Test', NULL, 2, 1, 1),
-(5, 'Test10', NULL, 3, 2, 1),
-(6, 'Test111', NULL, 3, 1, 1),
-(7, 'Test10_1', NULL, 3, 1, 1),
-(8, 'Test11156', NULL, 3, 1, 1),
-(9, 'Test19', NULL, 3, 2, 2),
-(10, 'T1234', NULL, 3, 1, 1),
-(11, 'AR', NULL, 3, 1, 2),
-(12, 'AR1', NULL, 3, 1, 1),
-(13, 'Test10_1_2', NULL, 3, 1, 1),
-(14, 'Test_1', NULL, 13, 1, 1);
+INSERT INTO `microlessons` (`microlesson_id`, `lesson_name`, `presentation_ppt_content`, `user_id`, `lesson_environment_id`, `study_group_id`, `presentation_on`, `interactables_on`) VALUES
+(1, 'virtual_reality', NULL, 3, 2, 1, 0, 1),
+(4, 'Test', NULL, 2, 1, 1, 0, 0),
+(5, 'Test10', NULL, 3, 2, 1, 0, 0),
+(6, 'Test111', NULL, 3, 1, 1, 0, 0),
+(7, 'Test10_1', NULL, 3, 1, 1, 0, 0),
+(8, 'Test11156', NULL, 3, 1, 1, 0, 0),
+(9, 'Test19', NULL, 3, 2, 2, 0, 0),
+(10, 'T1234', NULL, 3, 1, 1, 0, 0),
+(11, 'Test111_1', NULL, 3, 1, 1, 0, 1),
+(12, 'Test111_1_2', NULL, 3, 1, 1, 0, 1),
+(13, 'Test111_1_2_3', NULL, 3, 1, 1, 0, 0),
+(14, 'Test5', NULL, 3, 1, 1, 1, 1),
+(15, 'Test10_1_2', NULL, 3, 1, 1, 1, 1),
+(16, 'Test10_1_2_3', NULL, 3, 1, 1, 1, 0),
+(17, 'Test10_1_2_3_4', NULL, 3, 1, 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -118,7 +140,7 @@ CREATE TABLE `presentation` (
   `PresentationId` int(11) NOT NULL,
   `imgTitle` varchar(100) NOT NULL DEFAULT 'Untitled',
   `imgType` varchar(20) NOT NULL DEFAULT 'png',
-  `imgData` longblob DEFAULT NULL,
+  `imgData` longblob,
   `microlesson_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -237,31 +259,27 @@ CREATE TABLE `users` (
   `achievements` varchar(100) DEFAULT NULL,
   `face_recognition_image` varchar(100) DEFAULT NULL,
   `role_id` int(11) NOT NULL,
-  `webplatform_email` varchar(50) DEFAULT NULL,
-  `microlesson_id` int(11) DEFAULT NULL
+  `webplatform_email` varchar(30) DEFAULT NULL,
+  `microlesson_id` int(11) DEFAULT NULL,
+  `avatar_type_id` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `hash`, `salt`, `achievements`, `face_recognition_image`, `role_id`, `webplatform_email`, `microlesson_id`) VALUES
-(1, 'aca12345678', '$5$rounds=5000$somethingaca1234$TmUXSCsML6s5S9QujzRwZBt.jcl5vT.IzxNTH1O/38D', '$5$rounds=5000$somethingaca12345678$', 'ProffesorVortexChat', '', 2, 'aleksandar_jov', 1),
-(2, 'aca87654321', '$5$rounds=5000$somethingaca8765$6AqFWVYEAhSGvzyez2SPMqQQpFzcGMui2HkA6GQXvdB', '$5$rounds=5000$somethingaca87654321$', 'ProffesorVortexChat,InteractWithUsers', '', 2, NULL, 1),
-(3, 'acauser123', '$5$rounds=5000$somethingacauser$Y56RQ0QmeCwsMWIWUPVarkMTbDXtdKsaHw4ZNlgHQaD', '$5$rounds=5000$somethingacauser123$', 'ProffesorVortexChat,InteractWithUsers,MoveObject', 'user_images\\acauser123.jpg', 1, 'Aca.jovanovic1990@gmail.com', 1),
-(4, 'acauser321', '$5$rounds=5000$somethingacauser$Y56RQ0QmeCwsMWIWUPVarkMTbDXtdKsaHw4ZNlgHQaD', '$5$rounds=5000$somethingacauser321$', 'InteractWithUsers', NULL, 2, NULL, 1),
-(5, 'acauser111', '$5$rounds=5000$somethingacauser$Y56RQ0QmeCwsMWIWUPVarkMTbDXtdKsaHw4ZNlgHQaD', '$5$rounds=5000$somethingacauser111$', NULL, NULL, 2, NULL, NULL),
-(6, 'sandra123', '$5$rounds=5000$somethingsandra1$d/SW8YQdznt3Q.PiApOWODnroGJnVLZr4T7uwZjcQ36', '$5$rounds=5000$somethingsandra123$', ',InteractWithUsers', NULL, 2, NULL, NULL),
-(7, 'testuser1', '$5$rounds=5000$somethingtestuse$NXMVt8QOrU7Nl7PWIVaIMWYarFes8YqC./qG9ns5H89', '$5$rounds=5000$somethingtestuser1$', NULL, NULL, 2, NULL, NULL),
-(8, 'milijana123', '$5$rounds=5000$somethingmilijan$u4R2VID1Z8n./LCUAwOxiII.XxhCqD2y9f1Ibcjo854', '$5$rounds=5000$somethingmilijana123$', NULL, NULL, 2, NULL, NULL),
-(9, 'Milica123', '$5$rounds=5000$somethingMilica1$OhVf7MzRl4PfOZ9Q8dFMFnAOrblGb8UWyuQl2rbeRq.', '$5$rounds=5000$somethingMilica123$', NULL, NULL, 2, NULL, NULL),
-(10, 'acaacaaca', '$5$rounds=5000$somethingacaacaa$MTzpjR57Kz6ZRsqUcY8Xk.QK314MqyEuRhsMd1m3R64', '$5$rounds=5000$somethingacaacaaca$', NULL, NULL, 2, NULL, NULL),
-(11, '', '$5$rounds=5000$something$GBquX92fUdXEFvPC8EjDeaYS6JhG.XuehkA/JwRrBH6', '$5$rounds=5000$something$', NULL, NULL, 2, NULL, NULL),
-(12, 'annauser123', '$5$rounds=5000$somethingannause$MdWK9G/5LF9lrUSeVtFpUPYrQnJpF/UqARLJcKxemH/', '$5$rounds=5000$somethingannauser123$', 'MoveObject', NULL, 2, 'annauser123@vortex.com', 1),
-(13, 'amilosavljevic', '$5$rounds=5000$somethingamilosa$L992Y0czbBVOIsLUCJ3.BZDbc8Qs9SNbevIQPHnbYuB', '$5$rounds=5000$somethingamilosavljevic$', NULL, NULL, 1, 'amilosavljevic@vortex.com', 1),
-(14, 'astanimirovic', '$5$rounds=5000$somethingastanim$qaI8fjocMBL7yZFe8P2KiUG9vB41aBO2XvqmaVAEn42', '$5$rounds=5000$somethingastanimirovic$', NULL, NULL, 1, 'astanimirovic@vortex.com', 1),
-(15, 'adimitrijevic', '$5$rounds=5000$somethingadimitr$M8wH2ySAEbRyagRfIcAFXEMIoB23EdabssEWdrgCJH0', '$5$rounds=5000$somethingadimitrijevic$', NULL, NULL, 1, 'adimitrijevic@vortex.com', 1),
-(16, 'student1', '$5$rounds=5000$somethingstudent$C598naz1BB5ShVQqtT4zJ0Mq7075bLhw8jGLbYXhVc2', '$5$rounds=5000$somethingstudent1$', NULL, NULL, 2, 'student1@vortex.com', 1);
+INSERT INTO `users` (`id`, `username`, `hash`, `salt`, `achievements`, `face_recognition_image`, `role_id`, `webplatform_email`, `microlesson_id`, `avatar_type_id`) VALUES
+(1, 'aca12345678', '$5$rounds=5000$somethingaca1234$TmUXSCsML6s5S9QujzRwZBt.jcl5vT.IzxNTH1O/38D', '$5$rounds=5000$somethingaca12345678$', 'ProffesorVortexChat', '', 2, 'aleksandar_jov', 1, 1),
+(2, 'aca87654321', '$5$rounds=5000$somethingaca8765$6AqFWVYEAhSGvzyez2SPMqQQpFzcGMui2HkA6GQXvdB', '$5$rounds=5000$somethingaca87654321$', 'ProffesorVortexChat,InteractWithUsers', '', 2, NULL, 1, 1),
+(3, 'acauser123', '$5$rounds=5000$somethingacauser$Y56RQ0QmeCwsMWIWUPVarkMTbDXtdKsaHw4ZNlgHQaD', '$5$rounds=5000$somethingacauser123$', 'ProffesorVortexChat,InteractWithUsers,MoveObject,InteractWithCar', 'user_images\\acauser123.jpg', 1, 'Aca.jovanovic1990@gmail.com', 17, 1),
+(4, 'acauser321', '$5$rounds=5000$somethingacauser$Y56RQ0QmeCwsMWIWUPVarkMTbDXtdKsaHw4ZNlgHQaD', '$5$rounds=5000$somethingacauser321$', 'InteractWithUsers', NULL, 2, NULL, 1, 1),
+(5, 'acauser111', '$5$rounds=5000$somethingacauser$Y56RQ0QmeCwsMWIWUPVarkMTbDXtdKsaHw4ZNlgHQaD', '$5$rounds=5000$somethingacauser111$', NULL, NULL, 2, NULL, NULL, 1),
+(6, 'sandra123', '$5$rounds=5000$somethingsandra1$d/SW8YQdznt3Q.PiApOWODnroGJnVLZr4T7uwZjcQ36', '$5$rounds=5000$somethingsandra123$', ',InteractWithUsers', NULL, 2, NULL, NULL, 1),
+(7, 'testuser1', '$5$rounds=5000$somethingtestuse$NXMVt8QOrU7Nl7PWIVaIMWYarFes8YqC./qG9ns5H89', '$5$rounds=5000$somethingtestuser1$', NULL, NULL, 2, NULL, NULL, 1),
+(8, 'milijana123', '$5$rounds=5000$somethingmilijan$u4R2VID1Z8n./LCUAwOxiII.XxhCqD2y9f1Ibcjo854', '$5$rounds=5000$somethingmilijana123$', NULL, NULL, 2, NULL, NULL, 1),
+(9, 'Milica123', '$5$rounds=5000$somethingMilica1$OhVf7MzRl4PfOZ9Q8dFMFnAOrblGb8UWyuQl2rbeRq.', '$5$rounds=5000$somethingMilica123$', NULL, NULL, 2, NULL, NULL, 1),
+(10, 'acaacaaca', '$5$rounds=5000$somethingacaacaa$MTzpjR57Kz6ZRsqUcY8Xk.QK314MqyEuRhsMd1m3R64', '$5$rounds=5000$somethingacaacaaca$', NULL, NULL, 2, NULL, NULL, 1),
+(11, '', '$5$rounds=5000$something$GBquX92fUdXEFvPC8EjDeaYS6JhG.XuehkA/JwRrBH6', '$5$rounds=5000$something$', NULL, NULL, 2, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -298,11 +316,17 @@ ALTER TABLE `achievements`
   ADD UNIQUE KEY `name` (`name`);
 
 --
+-- Indexes for table `avatar_type`
+--
+ALTER TABLE `avatar_type`
+  ADD PRIMARY KEY (`avatar_type_id`);
+
+--
 -- Indexes for table `hostingaddresses`
 --
 ALTER TABLE `hostingaddresses`
   ADD PRIMARY KEY (`hosting_id`),
-  ADD KEY `address` (`address`) USING BTREE;
+  ADD UNIQUE KEY `address` (`address`);
 
 --
 -- Indexes for table `lesson_environment`
@@ -374,10 +398,16 @@ ALTER TABLE `achievements`
   MODIFY `achievement_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `avatar_type`
+--
+ALTER TABLE `avatar_type`
+  MODIFY `avatar_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `hostingaddresses`
 --
 ALTER TABLE `hostingaddresses`
-  MODIFY `hosting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `hosting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `lesson_environment`
@@ -389,7 +419,7 @@ ALTER TABLE `lesson_environment`
 -- AUTO_INCREMENT for table `microlessons`
 --
 ALTER TABLE `microlessons`
-  MODIFY `microlesson_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `microlesson_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `presentation`
@@ -413,7 +443,7 @@ ALTER TABLE `study_group`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `user_data`

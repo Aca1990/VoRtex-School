@@ -9,6 +9,7 @@ public static class DBManager
     public static string face_recognition_image_location;
     public static int role_id;
     public static MicroLesson microLesson;
+    public static string avatar_type_id;
 
     static DBManager()
     {

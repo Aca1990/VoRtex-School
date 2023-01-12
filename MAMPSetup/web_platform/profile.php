@@ -2,6 +2,7 @@
 include("includes/header.php");
 require 'config/config.php';
 require 'includes/form_handlers/microlesson_handler.php';
+require 'includes/form_handlers/user_handler.php';
 
 $message_obj = new Message($con, $userLoggedIn);
 
@@ -111,6 +112,7 @@ if(isset($_POST['post_message'])) {
       <li role="presentation"><a href="#messages_div" aria-controls="messages_div" role="tab" data-toggle="tab">Messages</a></li>
 	  <li role="presentation"><a href="#content_div" aria-controls="content_div" role="tab" data-toggle="tab">Create Content</a></li>
 	  <li role="presentation"><a href="#students_div" aria-controls="students_div" role="tab" data-toggle="tab">Students progress</a></li>
+	  <li role="presentation"><a href="#user_div" aria-controls="user_div" role="tab" data-toggle="tab">User settings</a></li>
     </ul>
 
     <div class="tab-content">
@@ -299,11 +301,11 @@ if(isset($_POST['post_message'])) {
 				$result_students = mysqli_query($con_users, $sql_students)or die($sql_students);
 
 				while ($row = mysqli_fetch_array($result_students)) {
-				   	$username = $row["username"];
+				   	$username_student = $row["username"];
 					$achievements = $row["achievements"];
 					$lesson_name = $row["lesson_name"];
 					echo "<b>User Name</b>";
-					echo "<p>$username</p>";			
+					echo "<p>$username_student</p>";			
 					echo "<b>Achievements</b>";
 					echo "<p>$achievements</p>";				
 					echo "<b>Microlesson</b>";
@@ -336,9 +338,43 @@ if(isset($_POST['post_message'])) {
 
       </div>
 	  
+	  <div role="tabpanel" class="tab-pane fade" id="user_div">
+        <?php  
+        
+			echo "<h4>User Settings</h4><hr><br>";
+
+        ?>
+		
+        <div class="message_post">
+			<form action="<?php echo $username; ?>" method="POST">
+				<?php
+					$sql_students = "SELECT avatar_type.name FROM avatar_type INNER JOIN users ON users.avatar_type_id=avatar_type.avatar_type_id WHERE users.id='$user_id';";
+				    $result_students = mysqli_query($con_users, $sql_students)or die($sql_students);
+					$loginInfo = mysqli_fetch_assoc($result_students);
+					$avatar_name = $loginInfo["name"];
+					
+					echo "<h2>Avatar type</h2>";
+				
+					echo "<p>Selected avatar is $avatar_name</p>";
+					$sql_le = "SELECT avatar_type_id, name FROM avatar_type;";
+					$result = mysqli_query($con_users, $sql_le);
+
+					echo "<select name='Avatar'>";
+					while ($row = mysqli_fetch_array($result)) {
+					   echo "<option value='" .$row['avatar_type_id']."'> ".$row['name'] . "</option>"; 
+					}
+					echo "</select>";
+					echo "<br>";
+					echo "<br>";
+				?>
+				<input type="hidden" id="userId" name="userId" value="<?php echo $user_id; ?>">
+				<input type="submit" name="select_avatar" value="Select avatar">
+			</form>
+        </div>
+
+      </div>
 
     </div>
-
 
 	</div>
 
@@ -363,7 +399,6 @@ if(isset($_POST['post_message'])) {
       		</div>
       	</form>
       </div>
-
 
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

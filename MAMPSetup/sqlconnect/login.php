@@ -22,7 +22,7 @@
 	}
 
 	// check if name exists
-	$namecheckquery = "SELECT users.username, users.salt, users.hash, users.achievements, users.face_recognition_image, users.role_id, users.id, users.microlesson_id from users WHERE users.username='". $username . "';";
+	$namecheckquery = "SELECT users.username, users.salt, users.hash, users.achievements, users.face_recognition_image, users.role_id, users.id, users.microlesson_id, users.avatar_type_id from users WHERE users.username='". $username . "';";
 	# $namecheckquery = "SELECT users.username, users.salt, users.hash, users.achievements, users.face_recognition_image, users.role_id, users.id, microlessons.lesson_name FROM users INNER JOIN microlessons ON users.id=microlessons.user_id WHERE users.username='". $username . "';";
 
 	$namecheck = mysqli_query($con, $namecheckquery) or die("2: name check query failed " . $username); // error code #2 - name check query failed
@@ -50,5 +50,5 @@
 	$microlessonnamecheck = mysqli_query($con, $microlessoncheckquery) or die("2: microlesson check query failed " . $username); // error code #2 - name check query failed
 	$microlessonInfo = mysqli_fetch_assoc($microlessonnamecheck);
 
-	echo "0\t" . $loginInfo["achievements"] . "\t" . $loginInfo["face_recognition_image"] . "\t" . $loginInfo["role_id"] . "\t" . $loginInfo["id"] . "\t" . $microlessonInfo["lesson_name"] . "\t" . $microlessonInfo["lesson_environment_id"] . "\t" . $loginInfo["microlesson_id"] . "\t" . $microlessonInfo["presentation_on"] . "\t" . $microlessonInfo["interactables_on"];
+	echo "0\t" . $loginInfo["achievements"] . "\t" . $loginInfo["face_recognition_image"] . "\t" . $loginInfo["role_id"] . "\t" . $loginInfo["id"] . "\t" . $microlessonInfo["lesson_name"] . "\t" . $microlessonInfo["lesson_environment_id"] . "\t" . $loginInfo["microlesson_id"] . "\t" . $microlessonInfo["presentation_on"] . "\t" . $microlessonInfo["interactables_on"] . "\t" . $loginInfo["avatar_type_id"];
 ?>
