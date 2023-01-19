@@ -11,6 +11,7 @@ using System.Numerics;
 using Nethereum.Util;
 using Nethereum.Web3;
 using System.Net;
+using System;
 
 // TODO: IMPORTANT! A serialization bug sometimes makes the walletcache.data broken, fix this!
 // for now, always backup walletcache.data
@@ -146,7 +147,6 @@ public class WalletManager : MonoBehaviour {
         Debug.Log("Path location " + $"http://{NetworkConstants.IpAddress}/blockchain/" + fileName);
         filePath = ($"http://{NetworkConstants.IpAddress}/blockchain/" + fileName);
 
-
         bool exist = false;
         try
         {
@@ -229,6 +229,7 @@ public class WalletManager : MonoBehaviour {
         }
 
         recepientAddressDropdown.gameObject.SetActive(recepientAddressDropdown.options.Count > 0);
+
     }
 
 
@@ -250,9 +251,7 @@ public class WalletManager : MonoBehaviour {
         passwordInputField.resetFields();
         recepientAddressInputField.text = "";
 
-        RefreshRecepientAddressDropdown();
-
-        int index = 1; // user wallet
+        int index = walletSelectionDropdown.value;
 
         if (index >= walletSelectionDropdown.options.Count - 1)
         {
@@ -268,24 +267,23 @@ public class WalletManager : MonoBehaviour {
             QRPanel.gameObject.SetActive(false);
 
         }
-
         else
         {
             createWalletPanel.SetActive(false);
-            operationsPanel.SetActive(true);
+            //operationsPanel.SetActive(true);
 
             CopyToClipboardButton.interactable = true;
             ShowQRCodeButton.interactable = true;
 
-            QRPanel.RenderQRCode(walletList[index].address);
-            StartCoroutine(CheckAccountBalanceCoroutine(walletList[index].address));
+            QRPanel.RenderQRCode(walletList[walletSelectionDropdown.value].address);
+            StartCoroutine(CheckAccountBalanceCoroutine(walletList[walletSelectionDropdown.value].address));
         }
     }
 
 
     void SaveDataToFile()
     {
-
+        // Save wallet data
         //bf = new BinaryFormatter();
         //HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(filePath);
         //WebResponse myResp = myReq.GetResponse();
@@ -396,7 +394,11 @@ public class WalletManager : MonoBehaviour {
             TokenContractService.Instance.DecodeVariable<BigInteger>("balanceOf", tokenBalanceRequest.Result), 
             TokenContractService.Instance.TokenInfo.decimals).ToString();
 
-        EtherBalanceText.text = "ETH: " + etherBalance;
+        EtherBalanceText.text = "\tETH: " + etherBalance;
+        if (string.IsNullOrEmpty(TokenContractService.Instance.TokenInfo.symbol))
+        {
+            TokenContractService.Instance.TokenInfo.symbol = "None";
+        }
         CustomTokenBalanceText.text = TokenContractService.Instance.TokenInfo.symbol + ": " + customTokenBalance;
     }
 

@@ -5,6 +5,8 @@ public class WorldInteraction : NetworkBehaviour
 {
     private bool interactionReady;
     private GameObject interactedObject;
+    public GameObject blockchainObject;
+    public GameObject createWalletObject;
 
     private ChangeCamera changeCamera;
 
@@ -53,6 +55,34 @@ public class WorldInteraction : NetworkBehaviour
             } else if (Input.GetKeyDown(KeyCode.I))
             {
                 GetIInteraction(interactedObject.name);
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.B))
+        {
+            if (blockchainObject != null)
+            {
+                if (blockchainObject.activeSelf)
+                {
+                    blockchainObject.SetActive(false);
+                }
+                else
+                {
+                    blockchainObject.SetActive(true);
+                }
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.N))
+        {
+            if (createWalletObject != null)
+            {
+                if (createWalletObject.activeSelf)
+                {
+                    createWalletObject.SetActive(false);
+                }
+                else
+                {
+                    createWalletObject.SetActive(true);
+                }
             }
         }
     }

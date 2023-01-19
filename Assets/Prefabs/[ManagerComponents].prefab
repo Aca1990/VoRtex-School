@@ -39,12 +39,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8298226352990154926}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b006e300a4330404b9ed769d2d6716eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkUrl: https://ropsten.infura.io
+  networkUrl: https://goerli.infura.io/v3/d474d639c03d404dac5e0b1db280208a
   passwordInputField: {fileID: 0}
   logText: {fileID: 0}
   recepientAddressInputField: {fileID: 0}
