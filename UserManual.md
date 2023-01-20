@@ -2,11 +2,13 @@
 
 Download Build
 
-•	link: https://mega.nz/folder/kQJkTL6L#tfWQAO-l6k7RXPdrubmYsg
+•	link: https://mega.nz/folder/kQJkTL6L#tfWQAO-l6k7RXPdrubmYsg or https://mega.nz/folder/cFJXmKyZ#LYC8-vZX6qvoOPbdwbytuw (with Blockchain)
 
 •	Use BuildVersionPhdLocal build for the local server (recommended, easy setup for the local host)
 
-•	Use BuildVersionPhdPublicfor build for public servers (you need public IP)
+•	Use BuildVersionPhdPublic build for public servers (you need public IP)
+
+•	Use BuildVersionPhdBlockchain build with blockchain features
 
 
 Login/register on the client application
@@ -71,6 +73,10 @@ Client application Controls
 •	C – Cinematic to VR view (Third- and first-person camera)
 
 •	I – Presentation in first-person view
+
+•	B – Select ETH address (BuildVersionPhdBlockchain)
+
+•	N – Create new wallet (BuildVersionPhdBlockchain)
 
 •	Esc – Exit
 

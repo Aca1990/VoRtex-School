@@ -60,6 +60,10 @@ VoRtex prototype video (click below)
 
 VoRtex prototype build: https://mega.nz/folder/kQJkTL6L#tfWQAO-l6k7RXPdrubmYsg
 
+VoRtex prototype Blockchain build: https://mega.nz/folder/cFJXmKyZ#LYC8-vZX6qvoOPbdwbytuw
+
+Supported PC platform: Windows 10 (64-bit)
+
 Install Requirement:
 
 •	Unity 2019.3.6f1 (64-bit)
@@ -67,6 +71,8 @@ Install Requirement:
 •	MAMP 4.1.0
 
 •	MySQL Workbench (8.0.22 or later)
+
+•	Microsoft Edge (for opening pdf certificates)
 
 Set up the database
 
