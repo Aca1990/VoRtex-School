@@ -18,15 +18,15 @@ video_capture = cv2.VideoCapture(0)
 script_location = os.path.dirname(os.path.realpath(__file__))
 print(script_location)
 # Load a sample picture and learn how to recognize it.
-leonid_image = face_recognition.load_image_file(os.path.join(script_location,"leonid1.jpg"))
-leonid_face_encoding = face_recognition.face_encodings(leonid_image)[0]
+1_image = face_recognition.load_image_file(os.path.join(script_location,"1.jpg"))
+1_face_encoding = face_recognition.face_encodings(1_image)[0]
 
-aca_image = face_recognition.load_image_file(os.path.join(script_location, "aca.jpg"))
-aca_face_encoding = face_recognition.face_encodings(aca_image)[0]
+2_image = face_recognition.load_image_file(os.path.join(script_location, "2.jpg"))
+2_face_encoding = face_recognition.face_encodings(2_image)[0]
 
 known_faces = [
-    leonid_face_encoding,
-	aca_face_encoding
+    1_face_encoding,
+	2_face_encoding
 ]
 
 #setup socekt
@@ -61,11 +61,11 @@ while True:
             name = "Unknown"
 
             if match[0]:
-                name = "Leonid"
+                name = "1"
                 send_message=True
 
             if match[1]:
-                name = "Aca"
+                name = "2"
                 send_message=True
 
             face_names.append(name)
