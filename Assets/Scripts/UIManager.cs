@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using Syncfusion.Pdf;
+using Syncfusion.Pdf.Graphics;
+using System;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -15,6 +18,7 @@ public class UIManager : MonoBehaviour
     public GameObject image;
 
     private Rect windowRect;
+    private int achievementsCounter;
     // Only show it if needed.
     public static bool showPresenterInfo = false;
     public static bool showModelInfo = false;
@@ -35,6 +39,15 @@ public class UIManager : MonoBehaviour
             }
 
             windowRect = new Rect(Screen.width - 160, Screen.height - 80, 150, 65);
+
+            if (DBManager.microLesson.PresentationON)
+            {
+                achievementsCounter++;
+            }
+            if (DBManager.microLesson.InteractablesON)
+            {
+                achievementsCounter++;
+            }
         }
     }
     
@@ -79,7 +92,51 @@ public class UIManager : MonoBehaviour
     {
         string[] achievementsArray = new string[DBManager.achievements.Count];
         DBManager.achievements.CopyTo(achievementsArray);
-        achiveDisplay.text = string.Join(", ", achievementsArray);
+        string achievements  = string.Join(", ", achievementsArray);
+        achiveDisplay.text = achievements;
+
+        if (DBManager.achievements.Count >= achievementsCounter)
+        {
+            GenerateCertificate(achievements);
+        }
+    }
+
+    private void GenerateCertificate(string achievements)
+    {
+        //Create a new PDF document.
+        PdfDocument document = new PdfDocument();
+
+        //Add a page to the document.
+        PdfPage page = document.Pages.Add();
+
+        //Create PDF graphics for the page.
+        PdfGraphics graphics = page.Graphics;
+
+        //Set the standard font.
+        PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 20);
+
+        //Add the text.
+        graphics.DrawString($"Lesson {DBManager.microLesson.LessonName} completed", font, PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, 10));
+        font = new PdfStandardFont(PdfFontFamily.Helvetica, 10);
+        graphics.DrawString($"Bravo {DBManager.username}", font, PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, 40));
+        graphics.DrawString($"Your achievements are: {achievements}", font, PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, 70));
+
+        //Create the stream object.
+        MemoryStream stream = new MemoryStream();
+
+        //Save the document into memory stream.
+        document.Save(stream);
+
+        //If the position is not set to '0' then the PDF will be empty.
+        stream.Position = 0;
+
+        //Close the document.
+        //C:/Users/YOUR_USER/AppData/LocalLow/DefaultCompany/VortexPrototype/lesson/user.pdf
+        string saveFileLocation = string.Format("{0}/{1}/{2}Certificate.{3}", Application.persistentDataPath, DBManager.microLesson.LessonName, DBManager.username, "pdf");
+        File.WriteAllBytes(saveFileLocation, stream.ToArray());
+        // Create NFT token, send request
+    
+        System.Diagnostics.Process.Start(saveFileLocation, @"C:\Program Files(x86)\Microsoft\Edge\Application\msedge.exe"); // adobe: @"C:\Program Files\Adobe\Acrobat DC\Acrobat\Acrobat.exe"
     }
 
     private Texture2D LoadPNG(string filePath)
