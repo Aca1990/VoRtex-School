@@ -342,7 +342,7 @@ public class Presentation : Interactable
     {
         WWWForm form = new WWWForm();
         form.AddField("microlesson_id", DBManager.microLesson.MicrolessonId);
-        string post = $"http://{NetworkConstants.IpAddress}/sqlconnect/downloadPresentation.php";
+        string post = $"https://{NetworkConstants.IpAddress}/sqlconnect/downloadPresentation.php";
         UnityWebRequest www = UnityWebRequest.Post(post, form);
         www.SetRequestHeader("User-Agent", "Mozilla / 5.0(Windows NT 10.0; WOW64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 55.0.2883.87 Safari / 537.36");
         yield return www.SendWebRequest();

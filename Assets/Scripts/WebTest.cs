@@ -8,7 +8,7 @@ public class WebTest : MonoBehaviour
     {
         WWWForm form = new WWWForm();
 
-        UnityWebRequest request = UnityWebRequest.Get($"http://{NetworkConstants.IpAddress}/sqlconnect/webtest.php");
+        UnityWebRequest request = UnityWebRequest.Get($"https://{NetworkConstants.IpAddress}/sqlconnect/webtest.php");
         yield return request.SendWebRequest();
 
         if (request.isNetworkError || request.isHttpError)

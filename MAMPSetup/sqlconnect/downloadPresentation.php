@@ -11,8 +11,6 @@
 
 	$microlesson_id = mysqli_real_escape_string($con,$_POST["microlesson_id"]);
 	$microlesson_idclean = filter_var($microlesson_id, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
-	
-	$imglocation = $_POST["upload_images"];
 
 	if($microlesson_id != $microlesson_idclean)
 	{

@@ -28,7 +28,7 @@ if(isset($_POST['post'])){
 
 	</div>
 
-	<div class="main_column column">
+    <div class="main_column column">
 		<form class="post_form" action="index.php" method="POST">
 			<textarea name="post_text" id="post_text" placeholder="Got something to say?"></textarea>
 			<input type="submit" name="post" id="post_button" value="Post">
@@ -37,7 +37,6 @@ if(isset($_POST['post'])){
 		</form>
 
 		<div class="posts_area"></div>
-		<img id="loading" src="assets/images/icons/loading.gif">
 
 
 	</div>

@@ -144,8 +144,8 @@ public class WalletManager : MonoBehaviour {
 
     void LoadWalletsFromFile()
     {
-        Debug.Log("Path location " + $"http://{NetworkConstants.IpAddress}/blockchain/" + fileName);
-        filePath = ($"http://{NetworkConstants.IpAddress}/blockchain/" + fileName);
+        Debug.Log("Path location " + $"https://{NetworkConstants.IpAddress}/blockchain/" + fileName);
+        filePath = ($"https://{NetworkConstants.IpAddress}/blockchain/" + fileName);
 
         bool exist = false;
         try

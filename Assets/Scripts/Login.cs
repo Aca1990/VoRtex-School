@@ -34,8 +34,8 @@ public class Login : MonoBehaviour
         form.AddField("password", passwordField.text);
 
         // NetworkConstants.IpAddress is db address
-        string address = NetworkConstants.IpAddress; // "vortex-webplatform.great-site.net" or GetLocalIPAddress();
-        string fullAddress = $"http://{address}/sqlconnect/login.php";
+        string address = NetworkConstants.IpAddress; // "vortex-webplatform.com" or GetLocalIPAddress();
+        string fullAddress = $"https://{address}/sqlconnect/login.php";
         UnityWebRequest www = UnityWebRequest.Post(fullAddress, form); // http://vortex-webplatform.great-site.net/sqlconnect/login.php
         www.SetRequestHeader("User-Agent", "Mozilla / 5.0(Windows NT 10.0; WOW64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 55.0.2883.87 Safari / 537.36");
         //www.SetRequestHeader("Access-Control-Allow-Origin", "*");
@@ -66,7 +66,7 @@ public class Login : MonoBehaviour
                 DBManager.microLesson.LessonEnvironment = Convert.ToInt32(serverData[6]); //"virtual_reality"
                 DBManager.microLesson.MicrolessonId = Convert.ToInt32(serverData[7]);
                 //TODO: add presentation_ppt_content to DB?
-                DBManager.microLesson.presentation_ppt_content = $"http://{address}/presentations/{DBManager.microLesson.LessonName}/"; // C:\MAMP\htdocs\presentations\acauser123\virtual_reality
+                DBManager.microLesson.presentation_ppt_content = $"https://{address}/presentations/{DBManager.microLesson.LessonName}/"; // C:\MAMP\htdocs\presentations\acauser123\virtual_reality
                 Debug.Log(@"C:\MAMP\htdocs\Python\face_recognize_webcam.py" + @" ..\" + DBManager.face_recognition_image_location);
                 Debug.Log(DBManager.microLesson.presentation_ppt_content);
 
@@ -86,7 +86,7 @@ public class Login : MonoBehaviour
                     form = new WWWForm();
                     form.AddField("user_id", DBManager.id);
                     form.AddField("user_ip", NetworkConstants.ServerIpAddress);
-                    string post = $"http://{address}/sqlconnect/getIpAddress.php";
+                    string post = $"https://{address}/sqlconnect/getIpAddress.php";
                     www = UnityWebRequest.Post(post, form);
                     www.SetRequestHeader("User-Agent", "Mozilla / 5.0(Windows NT 10.0; WOW64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 55.0.2883.87 Safari / 537.36");
                     yield return www.SendWebRequest();
@@ -113,7 +113,7 @@ public class Login : MonoBehaviour
                 {
                     form = new WWWForm();
                     form.AddField("microlesson_id", DBManager.microLesson.MicrolessonId);
-                    string post = $"http://{address}/sqlconnect/getClassroomIp.php";
+                    string post = $"https://{address}/sqlconnect/getClassroomIp.php";
                     www = UnityWebRequest.Post(post, form);
                     www.SetRequestHeader("User-Agent", "Mozilla / 5.0(Windows NT 10.0; WOW64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 55.0.2883.87 Safari / 537.36");
                     yield return www.SendWebRequest();

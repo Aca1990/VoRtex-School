@@ -1,4 +1,6 @@
 <?php
+$con_users = mysqli_connect("localhost", "root", "root", "useraccess");
+
 include("includes/header.php");
 require 'config/config.php';
 require 'includes/form_handlers/microlesson_handler.php';
