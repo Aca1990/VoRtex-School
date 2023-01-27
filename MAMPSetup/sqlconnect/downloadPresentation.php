@@ -26,13 +26,10 @@
 
 	$images = "0\n";
 	while ($row = mysqli_fetch_array($namecheck)) {
-        if (($count > 1 && presentation.microlesson_id != 1) || $count = 1)
-        {
-            $imgtitle = $row["imgTitle"];
-            $imgtype = $row["imgType"];
-            $blob = $row["imgData"];
-            $images = $images . "$imgtitle\t$blob" . "\n";
-        }
+		$imgtitle = $row["imgTitle"];
+		$imgtype = $row["imgType"];
+		$blob = $row["imgData"];
+		$images = $images . "$imgtitle\t$blob" . "\n";
 	}
 	
 	echo $images;
