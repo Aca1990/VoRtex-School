@@ -7,40 +7,11 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class InteractableModels : Interactable
+public class InteractableModels : Presentation
 {
-    private NetworkIdentity objNetId;
-    public NetworkIdentity userIdentityWithAuthority;
 
     void Start()
     {
-        objNetId = gameObject.GetComponent<NetworkIdentity>();        // get the object's network ID
-    }
-
-    [Command]
-    public override void CmdSetAuth(GameObject obj)
-    {
-        if (isServer)
-        {
-            Debug.Log("From server");
-            if(userIdentityWithAuthority != null)
-            {
-                if (objNetId.clientAuthorityOwner != userIdentityWithAuthority.connectionToClient)
-                {
-                    if (objNetId.hasAuthority || objNetId.clientAuthorityOwner != null)
-                    {
-                        Debug.Log("Has auth");
-                        objNetId.RemoveClientAuthority(objNetId.clientAuthorityOwner);
-                    }
-                    Debug.Log("No auth");
-                        //userIdentityWithAuthority = oo;
-                        //Debug.Log(GameObject.Find("PresentationPlane(Clone)").name);
-                        //Debug.Log(fooObj.name);
-                        objNetId.AssignClientAuthority(userIdentityWithAuthority.connectionToClient);
-                        Debug.Log("Auth addeddddd");
-                } 
-            }
-        }
     }
 
     public override void CmdInteractI(GameObject gameObject)

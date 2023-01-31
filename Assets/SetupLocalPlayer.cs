@@ -125,6 +125,7 @@ public class SetupLocalPlayer : NetworkBehaviour {
         }
 
         GameObject.Find("PresentationPlane(Clone)").GetComponent<Presentation>().CmdSetAuth(gameObject);
+        //GameObject.Find("Automobile").GetComponent<InteractableModels>().CmdSetAuth(gameObject);
     }
 
     [ClientRpc]

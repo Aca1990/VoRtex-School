@@ -18,7 +18,7 @@ public class Presentation : Interactable
     [SyncVar]
     private int imageCount;
 
-    private NetworkIdentity objNetId;
+    protected static NetworkIdentity objNetId;
 
     private GameObject firstPersonPresentation;
     private GameObject firstPersonPresentationCamera;
