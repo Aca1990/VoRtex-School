@@ -54,7 +54,7 @@ public class Video : Interactable
 
         //We want to play from video clip from url
         videoPlayer.source = VideoSource.Url;
-        videoPlayer.url = @"http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4";
+        videoPlayer.url = $"https://{NetworkConstants.IpAddress}/videos/VirtualReality2.mp4";
 
         //Set Audio Output to AudioSource
         videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
