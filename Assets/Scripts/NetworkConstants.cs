@@ -1,6 +1,6 @@
 ﻿
 public static class NetworkConstants
 {
-    public const string IpAddress = "localhost"; //"vortex-webplatform.great-site.net";
+    public const string IpAddress = "vortex-webplatform.com"; //"vortex-webplatform.com";
     public static string ServerIpAddress;
 }

@@ -10,6 +10,7 @@ public static class DBManager
     public static int role_id;
     public static MicroLesson microLesson;
     public static string avatar_type_id;
+    public static string blockchain_address;
 
     static DBManager()
     {

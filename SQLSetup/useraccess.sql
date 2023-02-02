@@ -497,6 +497,8 @@ ALTER TABLE `user_data`
 --
 ALTER TABLE `web_platform_users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  
+ALTER TABLE `users` ADD `token_address` VARCHAR(50) NOT NULL DEFAULT '0x3b71D96428B2e06057ecbB5171dF50Cb4a0fF87a' AFTER `avatar_type_id`;
 
 --
 -- Constraints for dumped tables

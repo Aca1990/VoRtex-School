@@ -276,7 +276,7 @@ public class WalletManager : MonoBehaviour {
             ShowQRCodeButton.interactable = true;
 
             QRPanel.RenderQRCode(walletList[walletSelectionDropdown.value].address);
-            StartCoroutine(CheckAccountBalanceCoroutine(walletList[walletSelectionDropdown.value].address));
+            StartCoroutine(CheckAccountBalanceCoroutine(DBManager.blockchain_address)); // walletList[walletSelectionDropdown.value].address
         }
     }
 
@@ -394,10 +394,10 @@ public class WalletManager : MonoBehaviour {
             TokenContractService.Instance.DecodeVariable<BigInteger>("balanceOf", tokenBalanceRequest.Result), 
             TokenContractService.Instance.TokenInfo.decimals).ToString();
 
-        EtherBalanceText.text = "\tETH: " + etherBalance;
+        EtherBalanceText.text = "\tETH: " + etherBalance + "\t for address: " + DBManager.blockchain_address;
         if (string.IsNullOrEmpty(TokenContractService.Instance.TokenInfo.symbol))
         {
-            TokenContractService.Instance.TokenInfo.symbol = "None";
+            TokenContractService.Instance.TokenInfo.symbol = "VRC";
         }
         CustomTokenBalanceText.text = TokenContractService.Instance.TokenInfo.symbol + ": " + customTokenBalance;
     }

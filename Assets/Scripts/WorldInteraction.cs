@@ -63,11 +63,11 @@ public class WorldInteraction : NetworkBehaviour
             {
                 if (blockchainObject.activeSelf)
                 {
-                    blockchainObject.SetActive(false);
+                    //blockchainObject.SetActive(false);
                 }
                 else
                 {
-                    blockchainObject.SetActive(true);
+                    //blockchainObject.SetActive(true);
                 }
             }
         }
@@ -77,11 +77,11 @@ public class WorldInteraction : NetworkBehaviour
             {
                 if (createWalletObject.activeSelf)
                 {
-                    createWalletObject.SetActive(false);
+                    //createWalletObject.SetActive(false);
                 }
                 else
                 {
-                    createWalletObject.SetActive(true);
+                    //createWalletObject.SetActive(true);
                 }
             }
         }

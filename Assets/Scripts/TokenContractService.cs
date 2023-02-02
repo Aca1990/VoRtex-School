@@ -102,8 +102,8 @@ public class TokenContractService : MonoBehaviour
 
         if (wd != null)
         {
-            StartCoroutine(SendFunds(wd.address, WalletManager.walletList[1].address, wd.privateKey,
-                "1000000000000000000")); // //  1 Ether = 1000000000000000000 Wei
+            StartCoroutine(SendFunds(wd.address, DBManager.blockchain_address, wd.privateKey,
+                "1000000000000000000")); // //  1 Ether = 1000000000000000000 Wei, WalletManager.walletList[1].address
         }
 
         else
