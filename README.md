@@ -1,5 +1,5 @@
 # VoRtex-School
-VoRtex School is a virtual worlds platform for education. Developed in Unity game engine using UNet networking, IBM Watson, Forge Networking, OpenCV, MySQL and Ethereum.
+VoRtex School is a virtual world platform for education. Developed in Unity game engine using UNet networking, IBM Watson, Forge Networking, OpenCV, MySQL and Ethereum.
 
 Educator needs are represented through the following system requirements:
 
@@ -9,19 +9,19 @@ Educator needs are represented through the following system requirements:
 
 •	Enable the deployment of the virtual classroom to end-users on cloud servers or local (institutions) machines (scalability)
 
-•	Enable virtual assists during the session that support teachers for predeined courses (content generation)
+•	Enable virtual assists during the session that support teachers for predefined courses (content generation)
 
-•	Design immersive environment that can be used via different user interfaces (Communication using PC desktop or VR devices)
+•	Design an immersive environment that can be used via different user interfaces (Communication using PC desktop or VR devices)
 
 
 
-The VoRtex prototype adapts the MicroLessons concept. MicroLessons are sessions prepared and created by the teacher using a web platform or the client application on a desktop PC. Also, the MicroLessons structure includes challenges like problem solving puzzles for different use cases like learning a new programming algorithm or exploring space to find required objects. MicroLesson practical examples are:
+The VoRtex prototype adapts the MicroLessons concept. MicroLessons are sessions prepared and created by the teacher using a web platform or the client application on a desktop PC. Also, the MicroLessons structure includes challenges like problem-solving puzzles for different use cases like learning a new programming algorithm or exploring space to find required objects. MicroLesson practical examples are:
 
 •	Build 3D interactive simulation (introduction to game development)
 
-•	Bank resource management and critical thinking (introduction to finance and decision making)
+•	Bank resource management and critical thinking (introduction to finance and decision-making)
 
-•	Real-world physics (a lesson about laws of physics)
+•	Real-world physics (a lesson about the laws of physics)
 
 •	Scientific method (chemistry and biology)
 
@@ -59,6 +59,8 @@ Figure 5. VoRtex virtual environment (Windows desktop, first-person perspective)
 VoRtex prototype video (click below)
 [![VoRtex prototype video](https://github.com/Aca1990/VoRtex-School/blob/master/Pictures/VoRtex%20virtual%20environment%20(Windows%20desktop%2C%20third-person%20perspective).png)](https://www.youtube.com/watch?v=xmUY6tadgkA&ab_channel=VoRtexteam "VoRtex prototype video")
 
-VoRtex prototype build: https://mega.nz/folder/kQJkTL6L#tfWQAO-l6k7RXPdrubmYsg
+VoRtex desktop prototype build: https://mega.nz/folder/kQJkTL6L#tfWQAO-l6k7RXPdrubmYsg
 
-requirement: install MySQL Workbench (8.0.22 or later) and set up the database. Contact author for support.
+VoRtex VR prototype for Meta Quest is avaiable on demand.
+
+requirement: install MySQL Workbench (8.0.22 or later) and set up the database. Contact the author for support.
